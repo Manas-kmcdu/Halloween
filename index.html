@@ -94,7 +94,21 @@ fieldset{border:0;padding:0;min-width:0}
 .note{margin-top:14px;font-size:.875rem;color:var(--ash)}
 .box{border:1px solid var(--char);padding:clamp(28px,5vw,48px)}.box h2{margin:0;font-size:clamp(2rem,6vw,3.5rem)}
 footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font-size:12px;text-transform:uppercase;letter-spacing:.2em;color:var(--ash)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rise,h1 .c,.rv{opacity:1;transform:none;filter:none}.vig,.fog,.em,.bat{display:none!important}html{scroll-behavior:auto}}
+/* sound toggle */
+.snd{position:fixed;z-index:70;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 8px));display:inline-flex;align-items:center;gap:12px;height:44px;padding:0 18px 0 16px;border:1px solid var(--char);border-radius:99px;background:rgba(11,11,12,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--ivory);cursor:pointer;transition:border-color .3s,box-shadow .3s}
+.snd:hover{border-color:var(--pump)}
+.snd.on{border-color:rgba(255,106,42,.55)}
+.snd.wait{border-color:var(--pump);box-shadow:0 0 0 0 rgba(255,106,42,.5);animation:sp 2s ease-out infinite}
+@keyframes sp{to{box-shadow:0 0 0 14px rgba(255,106,42,0)}}
+.snd .lb{color:var(--ivory);letter-spacing:.18em;min-width:9.5ch;text-align:left}
+.eq{display:flex;align-items:center;gap:2px;height:16px}
+.eq i{display:block;width:3px;height:100%;border-radius:2px;background:var(--ash);transform:scaleY(.18);transform-origin:50% 50%;transition:background .3s}
+.snd.on .eq i{background:var(--pump);animation:eqb .9s ease-in-out infinite alternate}
+.snd.on .eq i:nth-child(2){animation-duration:.65s;animation-delay:-.3s}
+.snd.on .eq i:nth-child(3){animation-duration:1.1s;animation-delay:-.6s}
+.snd.on .eq i:nth-child(4){animation-duration:.75s;animation-delay:-.15s}
+@keyframes eqb{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rise,h1 .c,.rv{opacity:1;transform:none;filter:none}.vig,.fog,.em,.bat{display:none!important}html{scroll-behavior:auto}.snd.on .eq i{transform:scaleY(.7)}}
 </style>
 </head>
 <body>
@@ -139,6 +153,9 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
  </form></div></section>
 </main>
 <footer>Unrest · Halloween House · 30 Oct 2026</footer>
+
+<button class="snd" id="snd" type="button" aria-pressed="false" aria-label="Play music"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lb" id="sl">Sound off</span></button>
+<audio id="au" loop preload="auto" src="halloween.mp3"></audio>
 
 <script>
 (function(){
@@ -191,6 +208,30 @@ tick();setInterval(tick,1000);
 /* scroll reveals */
 if(!rm&&"IntersectionObserver"in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});document.querySelectorAll(".rv").forEach(function(el){io.observe(el)})}
 else document.querySelectorAll(".rv").forEach(function(el){el.classList.add("in")});
+
+/* ambient music: tries to autoplay, falls back to the first tap/key; the toggle remembers the choice */
+var au=$("#au"),snd=$("#snd"),sl=$("#sl"),VOL=.5,want=true,fade,noop=function(){};
+try{if(localStorage.getItem("hh-sound")==="off")want=false}catch(e){}
+function save(v){try{localStorage.setItem("hh-sound",v)}catch(e){}}
+function ui(on,wait){snd.classList.toggle("on",on);snd.classList.toggle("wait",!!wait);snd.setAttribute("aria-pressed",String(on));snd.setAttribute("aria-label",on?"Mute music":"Play music");sl.textContent=wait?"Tap for sound":on?"Sound on":"Sound off"}
+function ramp(to,done){clearInterval(fade);fade=setInterval(function(){var v=au.volume,d=to-v;if(Math.abs(d)<.04){au.volume=to;clearInterval(fade);if(done)done()}else au.volume=Math.max(0,Math.min(1,v+(d>0?.03:-.05)))},50)}
+function start(){au.volume=0;var p=au.play();return Promise.resolve(p).then(function(){ramp(VOL);ui(true)})}
+function stop(){ramp(0,function(){au.pause()});ui(false)}
+snd.addEventListener("click",function(){
+ if(snd.classList.contains("on")){want=false;save("off");stop()}
+ else{want=true;save("on");start().catch(noop)}
+});
+function arm(){
+ var ev=["pointerdown","touchend","keydown","click"];
+ function f(e){if(snd.contains(e.target))return;start().then(off).catch(noop)}
+ function off(){ev.forEach(function(t){window.removeEventListener(t,f,true)})}
+ ev.forEach(function(t){window.addEventListener(t,f,true)});
+}
+if(want){start().catch(function(){ui(false,true);arm()})}else ui(false);
+document.addEventListener("visibilitychange",function(){
+ if(document.hidden){if(!au.paused)au.pause()}
+ else if(want&&snd.classList.contains("on")&&au.paused)au.play().catch(noop);
+});
 
 $("#yr").innerHTML=YEARS.map(function(y){return '<label><input type="radio" name="year" value="'+y+'"><span>'+y+'</span></label>'}).join("");
 
