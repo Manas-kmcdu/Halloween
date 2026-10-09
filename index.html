@@ -214,9 +214,10 @@ var au=$("#au"),snd=$("#snd"),sl=$("#sl"),VOL=.5,want=true,fade,noop=function(){
 try{if(localStorage.getItem("hh-sound")==="off")want=false}catch(e){}
 function save(v){try{localStorage.setItem("hh-sound",v)}catch(e){}}
 function ui(on,wait){snd.classList.toggle("on",on);snd.classList.toggle("wait",!!wait);snd.setAttribute("aria-pressed",String(on));snd.setAttribute("aria-label",on?"Mute music":"Play music");sl.textContent=wait?"Tap for sound":on?"Sound on":"Sound off"}
-function ramp(to,done){clearInterval(fade);fade=setInterval(function(){var v=au.volume,d=to-v;if(Math.abs(d)<.04){au.volume=to;clearInterval(fade);if(done)done()}else au.volume=Math.max(0,Math.min(1,v+(d>0?.03:-.05)))},50)}
-function start(){au.volume=0;var p=au.play();return Promise.resolve(p).then(function(){ramp(VOL);ui(true)})}
-function stop(){ramp(0,function(){au.pause()});ui(false)}
+var volOK=(au.volume=.3,au.volume===.3); /* iPhones and some mobile browsers ignore volume changes */
+function ramp(to,done){clearInterval(fade);if(!volOK){if(done)done();return}fade=setInterval(function(){var v=au.volume,d=to-v;if(Math.abs(d)<.04){au.volume=to;clearInterval(fade);if(done)done()}else au.volume=Math.max(0,Math.min(1,v+(d>0?.03:-.05)))},50)}
+function start(){if(volOK)au.volume=0;var p=au.play();return Promise.resolve(p).then(function(){ramp(VOL);ui(true)})}
+function stop(){clearInterval(fade);au.pause();ui(false)}
 snd.addEventListener("click",function(){
  if(snd.classList.contains("on")){want=false;save("off");stop()}
  else{want=true;save("on");start().catch(noop)}
