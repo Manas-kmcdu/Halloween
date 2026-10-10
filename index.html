@@ -319,7 +319,7 @@ $("#f").onsubmit=function(ev){ev.preventDefault();if(busy)return;
    lookup = URL of the Apps Script web app in invite-lookup.gs (returns JSON for ?phone=XXXXXXXXXX).
    pay    = optional payment link; the "Pay" button only shows when this is set.
    Leave lookup empty for demo mode: 9999999999 = approved, 8888888888 = pending, 7777777777 = declined. */
-var INVITE={lookup:"",pay:""},PRICE="Rs 799";
+var INVITE={lookup:"https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec",pay:""},PRICE="Rs 799";
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function demo(p){return new Promise(function(r){setTimeout(function(){r(p==="9999999999"?{status:"approved",name:"Aarav Sharma",college:"Kirori Mal College",year:"Second Year"}:p==="8888888888"?{status:"pending"}:p==="7777777777"?{status:"declined"}:{status:"none"})},800)})}
 function look(p){
