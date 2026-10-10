@@ -108,6 +108,56 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
 .snd.on .eq i:nth-child(3){animation-duration:1.1s;animation-delay:-.6s}
 .snd.on .eq i:nth-child(4){animation-duration:.75s;animation-delay:-.15s}
 @keyframes eqb{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+/* invite lookup + pass */
+.lk{display:inline-block;font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:var(--ash);border-bottom:1px solid var(--char);padding-bottom:3px;transition:color .3s,border-color .3s}
+.lk:hover{color:var(--pump);border-color:var(--pump)}
+.inv{max-width:768px;margin:0 auto;padding:24px clamp(20px,4vw,40px) 40px;scroll-margin-top:40px}
+.inv h2{font-size:clamp(2.4rem,7vw,4rem);line-height:1;margin:12px 0 16px}
+.inv .sub{max-width:30em;margin-bottom:40px;font-size:.95rem;color:var(--ash)}
+.look{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.look .fld{flex:1 1 260px;min-width:0}
+.pf{display:flex;align-items:center;gap:12px;margin-top:8px;border-bottom:1px solid var(--char);transition:border-color .3s}
+.pf:focus-within,.pf.bad{border-color:var(--pump)}
+.pf b{font-weight:500;font-size:1.125rem;color:var(--ash)}
+.pf input[type=text]{flex:1;min-width:0;margin:0;border:0;letter-spacing:.06em}
+.look .btn{flex:0 0 auto}
+#res{margin-top:36px;outline:none}
+.msg{max-width:30em;padding:24px 26px;border:1px solid var(--char)}
+.msg h3{font:400 1.7rem/1.05 Anton,sans-serif;letter-spacing:.02em}
+.msg h3 span{color:var(--pump)}
+.msg p{margin-top:12px;font-size:.95rem;color:rgba(244,240,232,.75)}
+.msg .lk{margin-top:18px}
+.dm{margin-top:14px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#4a4a4a}
+.tk{position:relative;max-width:420px;perspective:900px}
+.tkc{position:relative;overflow:hidden;border:1px solid #3a3a3a;border-radius:6px;background:linear-gradient(165deg,#161617,#0d0d0e 62%);box-shadow:0 40px 90px -40px rgba(255,106,42,.45),0 0 0 1px rgba(255,106,42,.06);transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s ease-out}
+.tkc::before{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,106,42,.22),transparent);pointer-events:none}
+.tkh{position:relative;padding:26px 26px 20px}
+.tkh .mn{position:absolute;right:22px;top:20px;width:44px;animation:mp 6s ease-in-out infinite}
+.tkt{margin-top:14px;font:400 clamp(2.4rem,11vw,3rem)/.95 Anton,sans-serif;letter-spacing:.015em}
+.tkt span{color:var(--pump)}
+.tkv{margin-top:10px;font:400 .95rem/1 Anton,sans-serif;letter-spacing:.34em}
+.tkb{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:20px 16px;padding:8px 26px 26px}
+.tkb .w2{grid-column:1/-1}
+.tkb dt{margin-bottom:4px}
+.tkb dd{font-size:1rem;font-weight:500;overflow-wrap:anywhere}
+.tkb .nm{font:400 1.9rem/1.05 Anton,sans-serif;letter-spacing:.02em}
+.perf{position:relative;height:0;margin:0 14px;border-top:1.5px dashed #3a3a3a}
+.perf::before,.perf::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--night);border:1px solid #3a3a3a}
+.perf::before{left:-25px}.perf::after{right:-25px}
+.tks{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:24px 26px 0}
+.pr{margin-top:2px;font:400 2.5rem/1 Anton,sans-serif;letter-spacing:.02em;color:var(--pump)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid rgba(255,106,42,.5);border-radius:99px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:var(--pump)}
+.chip i{width:6px;height:6px;border-radius:50%;background:var(--pump);box-shadow:0 0 10px 2px var(--pump);animation:wf 3s infinite}
+.pid{position:relative;padding:18px 26px 0;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.pid b{font-weight:600;color:var(--ivory)}
+.tka{position:relative;display:flex;flex-wrap:wrap;gap:10px;padding:20px 26px 26px}
+.btn.s{height:44px;padding:0 20px;font-size:.72rem;background:transparent;color:var(--ivory);border-color:#3a3a3a}
+.btn.s:hover{border-color:var(--pump);color:var(--pump)}
+.btn.s.p{background:var(--pump);border-color:var(--pump);color:var(--night)}
+.btn.s.p:hover{color:var(--pump)}
+.tk.in{animation:tkin .9s cubic-bezier(.22,1,.36,1) both}
+@keyframes tkin{0%{opacity:0;transform:translateY(26px) scale(.98);filter:blur(8px)}55%{opacity:1;filter:none}62%{opacity:.35}70%,100%{opacity:1;transform:none;filter:none}}
+@media(prefers-reduced-motion:reduce){.tkc{transform:none!important}.tk.in{animation:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rise,h1 .c,.rv{opacity:1;transform:none;filter:none}.vig,.fog,.em,.bat{display:none!important}html{scroll-behavior:auto}.snd.on .eq i{transform:scaleY(.7)}}
 </style>
 </head>
@@ -125,7 +175,7 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
   <p class="d ven rise" style="--n:2">HALLOWEEN HOUSE</p>
   <p class="dt rise" style="--n:3">30 OCTOBER 2026 &nbsp;/&nbsp; 1:00 PM — 10:00 PM</p>
   <p class="dare rise" style="--n:4">Enter if you dare.</p>
-  <div class="cta rise" style="--n:5"><a class="btn" href="#request"><span>Request your invite →</span></a><p>Submit your details to request access. Invitations are confirmed after approval.</p></div>
+  <div class="cta rise" style="--n:5"><a class="btn" href="#request"><span>Request your invite →</span></a><p>Submit your details to request access. Invitations are confirmed after approval.</p><a class="lk" href="#invite">Already requested? View your invite</a></div>
   <div class="cd rise" style="--n:6" id="cd" aria-label="Time until the party" hidden></div>
  </div>
  <svg class="house" viewBox="0 0 600 220" fill="none" stroke="#2c2c2c" stroke-width="1.5" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path d="M20 215h560M80 215V120l40-40 40 40v95M230 215V95l70-62 70 62v120M300 33V10M262 215v-60h76v60M440 215V135l35-45 35 45v80M510 135h30v80M255 95h90M300 95v-18"/><rect class="win" x="108" y="140" width="10" height="14" stroke="none"/><rect class="win" x="284" y="118" width="14" height="18" stroke="none" style="animation-delay:-2s"/><rect class="win" x="468" y="150" width="10" height="14" stroke="none" style="animation-delay:-3.4s"/><rect class="win" x="320" y="118" width="14" height="18" stroke="none" style="animation-delay:-.8s"/></svg>
@@ -141,6 +191,14 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
   <div class="row rv" style="--n:2"><dt class="lb">Date</dt><dd>Friday, 30 October 2026</dd></div>
   <div class="row rv" style="--n:3"><dt class="lb">Time</dt><dd>1:00 PM – 10:00 PM</dd></div>
  </dl></section>
+
+<section id="invite" class="inv"><p class="lb rv">Your invite</p><h2 class="d rv">CHECK YOUR INVITE</h2>
+ <p class="sub rv">Requested already? Enter the number you applied with. If you are approved, your invite appears here.</p>
+ <form id="lf" class="look rv" novalidate>
+  <div class="fld"><label class="lb" for="lp">Contact number</label><div class="pf" id="pf"><b>+91</b><input type="text" id="lp" inputmode="tel" placeholder="10-digit mobile number" autocomplete="tel"></div><p class="er" id="elp" role="alert" hidden></p></div>
+  <button class="btn" type="submit" id="lb"><span>View my invite →</span></button>
+ </form>
+ <div id="res" tabindex="-1" aria-live="polite"></div></section>
 
 <section id="request" class="form"><p class="lb rv">Request access</p><h2 class="d rv">REQUEST YOUR INVITE</h2>
  <div id="fw" class="rv"><form id="f" novalidate>
@@ -254,8 +312,59 @@ $("#f").onsubmit=function(ev){ev.preventDefault();if(busy)return;
  if(!ok)return;
  busy=true;$("#sb").firstChild.textContent="Submitting…";
  send({name:n,ig:i,contact:p,college:c,year:y}).then(function(){
-  $("#fw").innerHTML='<div class="box rise" style="--n:0;animation-delay:0s" role="status"><h2 class="d">YOU&rsquo;RE ON THE LIST.<br><span style="color:var(--pump)">WELL, ALMOST.</span></h2><p style="margin-top:24px;max-width:28em;color:rgba(244,240,232,.8)">Your request has been received. Invitations are confirmed after approval.</p></div>'
+  $("#fw").innerHTML='<div class="box rise" style="--n:0;animation-delay:0s" role="status"><h2 class="d">YOU&rsquo;RE ON THE LIST.<br><span style="color:var(--pump)">WELL, ALMOST.</span></h2><p style="margin-top:24px;max-width:28em;color:rgba(244,240,232,.8)">Your request has been received. Invitations are confirmed after approval.</p><a class="lk" href="#invite" style="margin-top:24px">Check your invite status</a></div>'
  }).catch(function(){busy=false;$("#sb").firstChild.textContent="Submit for approval →";err("y","Couldn't send that. Check your connection and try again.")});
+};
+/* ===== INVITE LOOKUP =====
+   lookup = URL of the Apps Script web app in invite-lookup.gs (returns JSON for ?phone=XXXXXXXXXX).
+   pay    = optional payment link; the "Pay" button only shows when this is set.
+   Leave lookup empty for demo mode: 9999999999 = approved, 8888888888 = pending, 7777777777 = declined. */
+var INVITE={lookup:"",pay:""},PRICE="Rs 799";
+function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function demo(p){return new Promise(function(r){setTimeout(function(){r(p==="9999999999"?{status:"approved",name:"Aarav Sharma",college:"Kirori Mal College",year:"Second Year"}:p==="8888888888"?{status:"pending"}:p==="7777777777"?{status:"declined"}:{status:"none"})},800)})}
+function look(p){
+ if(!INVITE.lookup)return demo(p);
+ return fetch(INVITE.lookup+(INVITE.lookup.indexOf("?")<0?"?":"&")+"phone="+encodeURIComponent(p)).then(function(r){if(!r.ok)throw 0;return r.json()});
+}
+function ics(){
+ var t=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Unrest//Halloween House//EN","BEGIN:VEVENT","UID:halloween-house-2026@unrest","DTSTAMP:20261010T000000Z","DTSTART:20261030T073000Z","DTEND:20261030T163000Z","SUMMARY:Trick or Treat — Halloween House","DESCRIPTION:Presented by Unrest","END:VEVENT","END:VCALENDAR"].join("\r\n");
+ var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/calendar"}));a.download="halloween-house.ics";document.body.appendChild(a);a.click();a.remove();
+}
+function msg(h,t,link){return '<div class="msg rise" style="--n:0;animation-delay:0s" role="status"><h3>'+h+'</h3><p>'+t+'</p>'+(link||"")+(INVITE.lookup?"":'<p class="dm">Demo data</p>')+'</div>'}
+function pass(d,p){
+ var id=d.id||"UH-"+p.slice(-4),pay=INVITE.pay?'<a class="btn s p" href="'+esc(INVITE.pay)+'" target="_blank" rel="noopener"><span>Pay '+PRICE+'</span></a>':"";
+ return '<div class="tk in" id="tk"><div class="tkc" id="tkc">'
+ +'<div class="tkh"><svg class="mn" viewBox="0 0 120 120" aria-hidden="true"><path d="M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z" fill="#FF6A2A" opacity=".92"/></svg><p class="lb">Unrest presents</p><p class="tkt">TRICK OR <span>TREAT</span></p><p class="tkv">HALLOWEEN HOUSE</p></div>'
+ +'<dl class="tkb"><div class="w2"><dt class="lb">Guest</dt><dd class="nm">'+esc(d.name||"Guest")+'</dd></div>'
+ +'<div><dt class="lb">College</dt><dd>'+esc(d.college||"-")+'</dd></div><div><dt class="lb">Year</dt><dd>'+esc(d.year||"-")+'</dd></div>'
+ +'<div><dt class="lb">Date</dt><dd>Fri, 30 Oct 2026</dd></div><div><dt class="lb">Time</dt><dd>1:00 PM – 10:00 PM</dd></div></dl>'
+ +'<div class="perf" aria-hidden="true"></div>'
+ +'<div class="tks"><div><p class="lb">Pass price</p><p class="pr">'+PRICE+'</p></div><span class="chip"><i></i>Approved</span></div>'
+ +'<p class="pid">Pass ID &nbsp;<b>'+esc(id)+'</b></p>'
+ +'<div class="tka">'+pay+'<button class="btn s" type="button" id="cal"><span>Add to calendar</span></button></div>'
+ +'</div></div>'+(INVITE.lookup?"":'<p class="dm">Demo data</p>');
+}
+function tilt(){
+ var w=$("#tk"),c=$("#tkc");if(!w||rm||!matchMedia("(hover:hover)").matches)return;
+ w.addEventListener("pointermove",function(e){var r=w.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.setProperty("--ry",(x*9)+"deg");c.style.setProperty("--rx",(-y*7)+"deg")});
+ w.addEventListener("pointerleave",function(){c.style.setProperty("--ry","0deg");c.style.setProperty("--rx","0deg")});
+}
+var lbusy=false,res=$("#res");
+$("#lp").addEventListener("input",function(){res.innerHTML="";$("#pf").classList.remove("bad");err("lp","")});
+$("#lf").onsubmit=function(ev){
+ ev.preventDefault();if(lbusy)return;
+ var p=$("#lp").value.replace(/[\s-]/g,"").replace(/^(\+91|91|0)(?=\d{10}$)/,"");
+ if(!/^[6-9]\d{9}$/.test(p)){err("lp","Enter a valid 10-digit mobile number.");$("#pf").classList.add("bad");return}
+ err("lp","");$("#pf").classList.remove("bad");
+ lbusy=true;var b=$("#lb").firstChild;b.textContent="Checking…";res.innerHTML="";
+ look(p).then(function(d){
+  var s=d&&d.status;
+  if(s==="approved"){res.innerHTML=pass(d,p);tilt();$("#cal").onclick=ics}
+  else if(s==="pending")res.innerHTML=msg('STILL <span>UNDER REVIEW.</span>',"We have your request. The Unrest team is still reviewing it. Check back soon with the same number.");
+  else if(s==="declined")res.innerHTML=msg('NOT THIS <span>TIME.</span>',"We could not approve this request. Reach out to the Unrest team if you think this is a mistake.");
+  else res.innerHTML=msg('NO REQUEST <span>FOUND.</span>',"Nothing under that number. Check the digits, or request your invite.",'<a class="lk" href="#request">Request your invite</a>');
+  res.focus({preventScroll:true});res.scrollIntoView({behavior:rm?"auto":"smooth",block:"center"});
+ }).catch(function(){res.innerHTML=msg('SOMETHING <span>BROKE.</span>',"Could not check right now. Check your connection and try again.")}).then(function(){lbusy=false;b.textContent="View my invite →"});
 };
 })();
 </script>
