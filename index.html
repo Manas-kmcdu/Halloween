@@ -339,10 +339,6 @@ function look(p){
  if(!INVITE.lookup)return demo(p);
  return fetch(INVITE.lookup+(INVITE.lookup.indexOf("?")<0?"?":"&")+"phone="+encodeURIComponent(p)).then(function(r){if(!r.ok)throw 0;return r.json()});
 }
-function ics(){
- var t=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Unrest//Halloween House//EN","BEGIN:VEVENT","UID:halloween-house-2026@unrest","DTSTAMP:20261010T000000Z","DTSTART:20261030T073000Z","DTEND:20261030T163000Z","SUMMARY:Trick or Treat — Halloween House","DESCRIPTION:Presented by Unrest","END:VEVENT","END:VCALENDAR"].join("\r\n");
- var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/calendar"}));a.download="halloween-house.ics";document.body.appendChild(a);a.click();a.remove();
-}
 function msg(h,t,link){return '<div class="msg rise" style="--n:0;animation-delay:0s" role="status"><h3>'+h+'</h3><p>'+t+'</p>'+(link||"")+(INVITE.lookup?"":'<p class="dm">Demo data</p>')+'</div>'}
 function upiLink(id){return "upi://pay?pa="+encodeURIComponent(UPI.id)+"&pn="+encodeURIComponent(UPI.name)+"&am="+AMOUNT+"&cu=INR&tn="+encodeURIComponent(id+" Halloween House")}
 function qrSvg(t){var q=qrcode(0,"M");q.addData(t);q.make();var n=q.getModuleCount(),m=2,d="",r,c;for(r=0;r<n;r++)for(c=0;c<n;c++)if(q.isDark(r,c))d+="M"+(c+m)+" "+(r+m)+"h1v1h-1z";var z=n+2*m;return '<svg viewBox="0 0 '+z+' '+z+'" shape-rendering="crispEdges" role="img" aria-label="UPI QR code for '+PRICE+'"><rect width="'+z+'" height="'+z+'" fill="#F4F0E8"/><path d="'+d+'" fill="#0B0B0C"/></svg>'}
@@ -360,7 +356,7 @@ function pass(d,p){
  +'<div class="perf" aria-hidden="true"></div>'
  +'<div class="tks"><div><p class="lb">Pass price</p><p class="pr">'+PRICE+'</p></div><span class="chip"><i></i>'+chip+'</span></div>'
  +'<p class="pid">Pass ID &nbsp;<b>'+esc(id)+'</b></p>'
- +'<div class="tka">'+pay+group+'<button class="btn s" type="button" id="cal"><span>Add to calendar</span></button></div>'
+ +'<div class="tka">'+pay+group+'</div>'
  +'</div></div><div id="pay" class="pay" hidden></div>'+note+(INVITE.lookup?"":'<p class="dm">Demo data</p>');
 }
 function payHtml(id,link,touch){
@@ -375,7 +371,7 @@ function sendPayer(p,n){
  return fetch(INVITE.lookup,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({phone:p,payer:n})});
 }
 function bindPass(d,p){
- $("#cal").onclick=ics;var b=$("#payb");if(!b)return;
+ var b=$("#payb");if(!b)return;
  var id=d.id||"UH-"+p.slice(-4),link=upiLink(id),touch=matchMedia("(pointer:coarse)").matches,box=$("#pay"),busy2=false;
  b.onclick=function(){
   if(!box.hidden){box.hidden=true;b.setAttribute("aria-expanded","false");return}
