@@ -383,9 +383,9 @@ $("#f").onsubmit=function(ev){ev.preventDefault();if(busy)return;
 };
 /* ===== INVITE LOOKUP =====
    lookup = URL of the Apps Script web app in invite-lookup.gs (returns JSON for ?phone=XXXXXXXXXX).
-   UPI    = where the Rs 799 goes. The page builds the UPI link and QR from it.
+   UPI    = where the Rs 999 goes. The page builds the UPI link and QR from it.
    Leave lookup empty for demo mode: 9999999999 = approved, 6666666666 = approved + paid, 8888888888 = pending, 7777777777 = declined. */
-var INVITE={lookup:"https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"},PRICE="Rs 799",AMOUNT=799,UPI={id:"9650692251@pthdfc",name:"Unrest"};
+var INVITE={lookup:"https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"},PRICE="Rs 999",AMOUNT=999,UPI={id:"9650692251@pthdfc",name:"Unrest"};
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 var DEMO={};
 function demo(p){return new Promise(function(r){setTimeout(function(){r(p==="9999999999"?{status:"approved",name:"Aarav Sharma",college:"Kirori Mal College",year:"Second Year",pay:DEMO.payer?"verifying":"due",group:DEMO.payer?"https://chat.whatsapp.com/demo":""}:p==="6666666666"?{status:"approved",name:"Meera Kapoor",college:"Hansraj College",year:"First Year",pay:"paid",group:"https://chat.whatsapp.com/demo"}:p==="8888888888"?{status:"pending"}:p==="7777777777"?{status:"declined"}:{status:"none"})},800)})}
@@ -612,7 +612,7 @@ function answer(q){
  if(/\b(die|dead|death|kill|killed|survive|suicide)\b/.test(s))return T("NOT TONIGHT");
  if(/who are you|your name|what are you/.test(s))return T("WE ARE MANY");
  if(/\b(when|date|time|start|starts|begin|day)\b/.test(s))return T("30 OCT 1 PM");
- if(/\b(price|cost|pay|fee|ticket|pass|much|entry)\b|799/.test(s))return T("RS 799");
+ if(/\b(price|cost|pay|fee|ticket|pass|much|entry)\b|999/.test(s))return T("RS 999");
  if(/\b(host|hosting|hosted|presents?|organi[sz]\w*|unrest)\b/.test(s))return T("UNREST");
  if(/\b(where|venue|location|address)\b/.test(s))return T("THE HOUSE");
  if(/\b(anyone|anybody|ghost|ghosts|spirit|spirits|haunted|watching|alone)\b/.test(s))return{t:["YES"],x:"YES"};
