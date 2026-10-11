@@ -21,6 +21,11 @@ a{color:inherit;text-decoration:none}
 .btn::before{content:"";position:absolute;inset:0;background:var(--night);transform:translateY(101%);transition:transform .35s cubic-bezier(.22,1,.36,1)}
 .btn span{position:relative}
 .btn:hover{color:var(--pump);box-shadow:0 0 44px -8px var(--pump)}.btn:hover::before{transform:none}
+.bts{display:flex;flex-wrap:wrap;gap:12px}
+.btn.g{background:transparent;color:var(--ivory);border-color:#4a4a4a}
+.btn.g::before{background:var(--pump)}
+.btn.g:hover{color:var(--night);border-color:var(--pump);box-shadow:0 0 44px -8px var(--pump)}
+@media(max-width:560px){.bts{width:100%;flex-direction:column}.bts .btn{width:100%}}
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;padding:24px clamp(20px,4vw,40px) 40px;isolation:isolate}
 .hero>*{position:relative;z-index:2}
@@ -255,7 +260,7 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
   <p class="d ven rise" style="--n:2">HALLOWEEN HOUSE</p>
   <p class="dt rise" style="--n:3">30 OCTOBER 2026 &nbsp;/&nbsp; 1:00 PM — 10:00 PM</p>
   <p class="dare rise" style="--n:4">Enter if you dare.</p>
-  <div class="cta rise" style="--n:5"><a class="btn" href="#request"><span>Request your invite →</span></a><p>Submit your details to request access. Invitations are confirmed after approval.</p><a class="lk" href="#invite">Already requested? View your invite</a><a class="lk" href="#summon">Summon the ghost</a></div>
+  <div class="cta rise" style="--n:5"><div class="bts"><a class="btn" href="#request"><span>Request your invite →</span></a><a class="btn g" href="#invite"><span>Check my invite</span></a></div><p>Submit your details to request access. Invitations are confirmed after approval.</p><a class="lk" href="#summon">Summon the ghost</a></div>
   <div class="cd rise" style="--n:6" id="cd" aria-label="Time until the party" hidden></div>
  </div>
  <svg class="house" viewBox="0 0 600 220" fill="none" stroke="#2c2c2c" stroke-width="1.5" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path d="M20 215h560M80 215V120l40-40 40 40v95M230 215V95l70-62 70 62v120M300 33V10M262 215v-60h76v60M440 215V135l35-45 35 45v80M510 135h30v80M255 95h90M300 95v-18"/><rect class="win" x="108" y="140" width="10" height="14" stroke="none"/><rect class="win" x="284" y="118" width="14" height="18" stroke="none" style="animation-delay:-2s"/><rect class="win" x="468" y="150" width="10" height="14" stroke="none" style="animation-delay:-3.4s"/><rect class="win" x="320" y="118" width="14" height="18" stroke="none" style="animation-delay:-.8s"/></svg>
@@ -438,9 +443,9 @@ $("#f").onsubmit=function(ev){ev.preventDefault();if(busy)return;
 };
 /* ===== INVITE LOOKUP =====
    lookup = URL of the Apps Script web app in invite-lookup.gs (returns JSON for ?phone=XXXXXXXXXX).
-   UPI    = where the Rs 999 goes. The page builds the UPI link and QR from it.
+   UPI    = where the Rs 799 goes. The page builds the UPI link and QR from it.
    Leave lookup empty for demo mode: 9999999999 = approved, 6666666666 = approved + paid, 8888888888 = pending, 7777777777 = declined. */
-var INVITE={lookup:"https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"},PRICE="Rs 999",AMOUNT=999,UPI={id:"9650692251@pthdfc",name:"Unrest"};
+var INVITE={lookup:"https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"},PRICE="Rs 799",AMOUNT=799,UPI={id:"9650692251@pthdfc",name:"Unrest"};
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 var DEMO={};
 function demo(p){return new Promise(function(r){setTimeout(function(){r(p==="9999999999"?{status:"approved",name:"Aarav Sharma",college:"Kirori Mal College",year:"Second Year",pay:DEMO.payer?"verifying":"due",group:DEMO.payer?"https://chat.whatsapp.com/demo":""}:p==="6666666666"?{status:"approved",name:"Meera Kapoor",college:"Hansraj College",year:"First Year",pay:"paid",group:"https://chat.whatsapp.com/demo"}:p==="8888888888"?{status:"pending"}:p==="7777777777"?{status:"declined"}:{status:"none"})},800)})}
