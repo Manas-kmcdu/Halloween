@@ -207,6 +207,9 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
 .sn .er{text-align:center}
 .ob{display:block;width:calc(100% - 28px);margin:0 14px 8px;padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer}
 .ob svg{display:block;width:100%;height:auto}
+.ob.gone{pointer-events:none;overflow:hidden;animation:ghost 1.8s ease-in forwards}
+@keyframes ghost{0%{opacity:1;filter:none;transform:none}12%{opacity:.25}22%{opacity:.95;filter:blur(.5px)}34%{opacity:.12;filter:blur(1px)}46%{opacity:.8;filter:blur(2px)}58%{opacity:.3;filter:blur(4px)}100%{opacity:0;filter:blur(14px) brightness(1.7);transform:translateY(-14px) scale(1.06)}}
+.ob.fold{transition:height .7s cubic-bezier(.22,1,.36,1),margin .7s cubic-bezier(.22,1,.36,1);height:0!important;margin-top:0;margin-bottom:0}
 </style>
 </head>
 <body>
@@ -401,7 +404,7 @@ function pass(d,p){
  note=st==="verifying"?'<p class="note">We have your payment details. The Unrest team will match the name to the payment, and this pass will show Confirmed. Join the WhatsApp group meanwhile.</p>':st==="paid"?'<p class="note">Payment received. Join the WhatsApp group for updates. See you on 30 October.</p>':"";
  return '<div class="tk in" id="tk"><div class="tkc" id="tkc">'
  +'<div class="tkh"><svg class="mn" viewBox="0 0 120 120" aria-hidden="true"><path d="M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z" fill="#FF6A2A" opacity=".92"/></svg><p class="lb">Unrest presents</p><p class="tkt">TRICK OR <span>TREAT</span></p><p class="tkv">HALLOWEEN HOUSE</p></div>'
- +'<button class="ob om" id="ob" type="button" title="Tap to spell it again" aria-label="Replay the spelling of your name"></button><dl class="tkb"><div class="w2"><dt class="lb">Guest</dt><dd class="nm"><span class="sr">'+esc(d.name||"Guest")+'</span><span id="tkn" aria-hidden="true" data-n="'+esc(d.name||"Guest")+'">'+esc(d.name||"Guest")+'</span></dd></div>'
+ +'<button class="ob om" id="ob" type="button" aria-label="A tiny ouija board spelling your name"></button><dl class="tkb"><div class="w2"><dt class="lb">Guest</dt><dd class="nm"><span class="sr">'+esc(d.name||"Guest")+'</span><span id="tkn" aria-hidden="true" data-n="'+esc(d.name||"Guest")+'">'+esc(d.name||"Guest")+'</span></dd></div>'
  +'<div><dt class="lb">College</dt><dd>'+esc(d.college||"-")+'</dd></div><div><dt class="lb">Year</dt><dd>'+esc(d.year||"-")+'</dd></div>'
  +'<div><dt class="lb">Date</dt><dd>Fri, 30 Oct 2026</dd></div><div><dt class="lb">Time</dt><dd>1:00 PM – 10:00 PM</dd></div></dl>'
  +'<div class="perf" aria-hidden="true"></div>'
@@ -657,14 +660,21 @@ if(bd){
 function ticket(){
  var host=document.getElementById("ob"),n=document.getElementById("tkn");
  if(!host||!n)return;
- var name=n.getAttribute("data-n")||"",chars=Array.from(name),b=Board(host,false);
+ var name=n.getAttribute("data-n")||"",chars=Array.from(name),b=Board(host,false),gone=false;
  if(rm){n.textContent=name;return}
- var play=function(){
-  n.textContent="";n.classList.add("sp");
-  b.spell(chars,function(t){n.textContent+=t},{dwell:chars.length>20?120:200}).then(function(){n.classList.remove("sp")})};
+ /* once the name is spelt the board flickers out like a candle, then the space closes up */
+ var fold=function(){
+  host.style.height=host.offsetHeight+"px";void host.offsetHeight;
+  host.classList.add("fold");setTimeout(function(){host.remove()},800)};
+ var vanish=function(){
+  wait(1400).then(function(){
+   gone=true;host.disabled=true;host.removeAttribute("title");host.setAttribute("aria-hidden","true");host.tabIndex=-1;
+   host.classList.add("gone");
+   host.addEventListener("animationend",function f(e){if(e.target!==host)return;host.removeEventListener("animationend",f);fold()})})};
  n.textContent="";n.classList.add("sp");
- setTimeout(play,1100);
- host.onclick=function(){if(!b.busy())play()}
+ setTimeout(function(){
+  b.spell(chars,function(t){n.textContent+=t},{dwell:chars.length>20?120:200}).then(function(){n.classList.remove("sp");vanish()})},1100);
+ host.onclick=function(){if(gone||b.busy())return}
 }
 window.HHOuija={ticket:ticket};
 })();
