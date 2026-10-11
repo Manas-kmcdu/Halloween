@@ -172,12 +172,6 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rise,h1 .c,.rv{opacity:1;transform:none;filter:none}.vig,.fog,.em,.bat{display:none!important}html{scroll-behavior:auto}.snd.on .eq i{transform:scaleY(.7)}}
 /* ===== ouija seance ===== */
 .sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.sn{border-top:1px solid var(--char)}
-.sn h2{font-size:clamp(2.4rem,7vw,4rem);line-height:1;margin:12px 0 16px}
-.sn h2 span{color:var(--pump)}
-.sn .sub{max-width:34em;margin-bottom:40px;font-size:.95rem;color:var(--ash)}
-.bd{position:relative;max-width:860px;margin:0 auto}
-.bd::before{content:"";position:absolute;inset:8% 6%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,106,42,.16),transparent);filter:blur(40px);pointer-events:none}
 .ob-svg{display:block;width:100%;height:auto;position:relative}
 .ob-svg .bg{stroke:#3a3a3a;stroke-width:1.5}
 .ob-svg .in{fill:none;stroke:var(--char);stroke-width:1}
@@ -195,21 +189,56 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
 @keyframes rg{50%{opacity:.4}}
 .om .ol{font-size:19px}
 .om .bg{stroke:#2c2c2c}
-.rdw{margin-top:28px;text-align:center}
-.rd{min-height:1.2em;margin-top:8px;padding-left:.28em;font:400 clamp(1.8rem,6vw,3rem)/1.15 Anton,Impact,sans-serif;letter-spacing:.28em;color:var(--pump);overflow-wrap:anywhere}
-.rd::after,.sp::after{content:"";display:inline-block;width:2px;height:.85em;margin-left:.12em;background:var(--pump);vertical-align:-.08em;animation:cur 1s steps(1) infinite}
+.sp::after{content:"";display:inline-block;width:2px;height:.85em;margin-left:.12em;background:var(--pump);vertical-align:-.08em;animation:cur 1s steps(1) infinite}
 @keyframes cur{50%{opacity:0}}
-.sn .look{max-width:640px;margin:36px auto 0}
-.qc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:640px;margin:22px auto 0}
-.qc button{padding:10px 18px;border:1px solid var(--char);border-radius:99px;background:transparent;color:var(--ash);font:inherit;font-size:.9rem;cursor:pointer;transition:border-color .25s,color .25s}
-.qc button:hover:not(:disabled){border-color:var(--pump);color:var(--ivory)}
-.qc button:disabled,.btn:disabled{opacity:.45;cursor:default}
-.sn .er{text-align:center}
+.btn:disabled{opacity:.45;cursor:default}
 .ob{display:block;width:calc(100% - 28px);margin:0 14px 8px;padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer}
 .ob svg{display:block;width:100%;height:auto}
 .ob.gone{pointer-events:none;overflow:hidden;animation:ghost 1.8s ease-in forwards}
 @keyframes ghost{0%{opacity:1;filter:none;transform:none}12%{opacity:.25}22%{opacity:.95;filter:blur(.5px)}34%{opacity:.12;filter:blur(1px)}46%{opacity:.8;filter:blur(2px)}58%{opacity:.3;filter:blur(4px)}100%{opacity:0;filter:blur(14px) brightness(1.7);transform:translateY(-14px) scale(1.06)}}
 .ob.fold{transition:height .7s cubic-bezier(.22,1,.36,1),margin .7s cubic-bezier(.22,1,.36,1);height:0!important;margin-top:0;margin-bottom:0}
+/* ===== ghost summoning ===== */
+.gh{border-top:1px solid var(--char)}
+.gh h2{font-size:clamp(2.4rem,7vw,4rem);line-height:1;margin:12px 0 16px}
+.gh h2 span{color:var(--pump)}
+.gh .sub{max-width:34em;margin-bottom:40px;font-size:.95rem;color:var(--ash)}
+.stg{position:relative;overflow:hidden;max-width:860px;height:clamp(440px,56vw,540px);margin:0 auto;border:1px solid var(--char);border-radius:6px;background:radial-gradient(ellipse at 50% 105%,#141416,#070708 70%);touch-action:manipulation}
+.stg::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;background:linear-gradient(transparent,rgba(244,240,232,.04));border-top:1px solid #1a1a1c;pointer-events:none}
+.glow{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 1s ease;background:radial-gradient(circle at 50% calc(100% - 118px),rgba(255,106,42,.4) 0,rgba(255,106,42,.15) 20%,rgba(255,106,42,.04) 44%,transparent 62%)}
+.stg.lit .glow{opacity:1;animation:gf 3.4s ease-in-out infinite}
+@keyframes gf{0%,100%{opacity:1}18%{opacity:.82}34%{opacity:.97}52%{opacity:.76}70%{opacity:.95}}
+.cdl{position:absolute;z-index:3;left:50%;bottom:20px;width:64px;padding:0;border:0;background:none;color:inherit;cursor:pointer;transform:translateX(-50%)}
+.cdl svg{display:block;width:100%;height:auto;overflow:visible}
+.cdl .fl{opacity:0;transform:scale(.2);transform-origin:40px 46px;transition:opacity .5s,transform .5s}
+.stg.lit .cdl .fl{opacity:1;transform:none;animation:fk 1.3s ease-in-out infinite alternate .5s}
+@keyframes fk{0%{transform:scale(1,1) skewX(0)}30%{transform:scale(.94,1.06) skewX(2deg)}60%{transform:scale(1.04,.96) skewX(-2deg)}100%{transform:scale(.97,1.04) skewX(1deg)}}
+.cdl .sm{opacity:0}
+.cdl.puff .sm{animation:sm 1.8s ease-out forwards}
+@keyframes sm{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-26px)}}
+.stg:not(.lit) .cdl::after{content:"";position:absolute;left:50%;top:26px;width:34px;height:34px;margin-left:-17px;border-radius:50%;border:1px solid var(--pump);opacity:0;animation:hn 2.6s ease-out infinite;pointer-events:none}
+@keyframes hn{0%{opacity:.7;transform:scale(.3)}100%{opacity:0;transform:scale(1.6)}}
+.ghw{position:absolute;z-index:2;left:50%;top:112px;width:clamp(112px,22vw,150px);transform:translateX(-50%);will-change:transform}
+.ghw.off{visibility:hidden;pointer-events:none}
+.ghb{display:block;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;filter:drop-shadow(0 0 22px rgba(244,240,232,.4));-webkit-tap-highlight-color:transparent}
+.ghb svg{display:block;width:100%;height:auto;overflow:visible;animation:bb 4.4s ease-in-out infinite}
+@keyframes bb{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.ghb .ar{transform-box:fill-box;transform-origin:50% 0;animation:aw 2.6s ease-in-out infinite alternate}
+.ghb .ar.r{animation-delay:-1.3s}
+@keyframes aw{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.ghb .mo{transform-box:fill-box;transform-origin:center;transform:scaleY(.55)}
+.ghb.talk .mo{animation:mt .32s ease-in-out infinite alternate}
+@keyframes mt{from{transform:scaleY(.5)}to{transform:scaleY(1.7)}}
+.ghb.appear{animation:ga 1.8s ease-out both}
+@keyframes ga{0%{opacity:0;filter:blur(16px) drop-shadow(0 0 22px rgba(244,240,232,.4));transform:translateY(40px) scale(.9)}20%{opacity:.5}30%{opacity:.08}44%{opacity:.75;filter:blur(5px) drop-shadow(0 0 22px rgba(244,240,232,.4))}56%{opacity:.25}78%{opacity:.95;filter:blur(1px) drop-shadow(0 0 22px rgba(244,240,232,.4));transform:none}100%{opacity:1;filter:drop-shadow(0 0 22px rgba(244,240,232,.4));transform:none}}
+.ghb.vanish{pointer-events:none;animation:gv 1.5s ease-in forwards}
+@keyframes gv{0%{opacity:1}14%{opacity:.2}26%{opacity:.9}40%{opacity:.1;filter:blur(2px) drop-shadow(0 0 22px rgba(244,240,232,.4))}54%{opacity:.6}100%{opacity:0;filter:blur(16px) brightness(1.8);transform:translateY(-36px) scale(1.12)}}
+.ghb.poke{animation:gp .5s cubic-bezier(.22,1,.36,1)}
+@keyframes gp{0%{transform:scale(1)}30%{transform:scale(1.16,.9)}60%{transform:scale(.95,1.07)}100%{transform:scale(1)}}
+.gb{position:absolute;z-index:4;left:50%;top:16px;width:min(440px,88%);padding:14px 18px;border:1px solid #3a3a3a;border-radius:4px;background:rgba(11,11,12,.86);font-size:1rem;line-height:1.4;text-align:center;color:var(--ivory);opacity:0;transform:translate(-50%,6px);transition:opacity .35s,transform .35s;pointer-events:none}
+.gb.on{opacity:1;transform:translate(-50%,0)}
+.gb::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;margin-left:-5px;background:rgba(11,11,12,.95);border-right:1px solid #3a3a3a;border-bottom:1px solid #3a3a3a;transform:rotate(45deg)}
+.gcap{margin-top:20px;text-align:center}
+@media(prefers-reduced-motion:reduce){.stg.lit .cdl .fl{transform:none}.ghb svg,.ghb .ar{animation:none!important}}
 </style>
 </head>
 <body>
@@ -226,7 +255,7 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
   <p class="d ven rise" style="--n:2">HALLOWEEN HOUSE</p>
   <p class="dt rise" style="--n:3">30 OCTOBER 2026 &nbsp;/&nbsp; 1:00 PM — 10:00 PM</p>
   <p class="dare rise" style="--n:4">Enter if you dare.</p>
-  <div class="cta rise" style="--n:5"><a class="btn" href="#request"><span>Request your invite →</span></a><p>Submit your details to request access. Invitations are confirmed after approval.</p><a class="lk" href="#invite">Already requested? View your invite</a><a class="lk" href="#seance">Ask the board a question</a></div>
+  <div class="cta rise" style="--n:5"><a class="btn" href="#request"><span>Request your invite →</span></a><p>Submit your details to request access. Invitations are confirmed after approval.</p><a class="lk" href="#invite">Already requested? View your invite</a><a class="lk" href="#summon">Summon the ghost</a></div>
   <div class="cd rise" style="--n:6" id="cd" aria-label="Time until the party" hidden></div>
  </div>
  <svg class="house" viewBox="0 0 600 220" fill="none" stroke="#2c2c2c" stroke-width="1.5" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path d="M20 215h560M80 215V120l40-40 40 40v95M230 215V95l70-62 70 62v120M300 33V10M262 215v-60h76v60M440 215V135l35-45 35 45v80M510 135h30v80M255 95h90M300 95v-18"/><rect class="win" x="108" y="140" width="10" height="14" stroke="none"/><rect class="win" x="284" y="118" width="14" height="18" stroke="none" style="animation-delay:-2s"/><rect class="win" x="468" y="150" width="10" height="14" stroke="none" style="animation-delay:-3.4s"/><rect class="win" x="320" y="118" width="14" height="18" stroke="none" style="animation-delay:-.8s"/></svg>
@@ -260,18 +289,44 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
   <fieldset><legend class="lb">Year</legend><div class="yr" id="yr"></div><p class="er" id="ey" role="alert" hidden></p></fieldset>
   <div><button class="btn" type="submit" id="sb"><span>Submit for approval →</span></button><p class="note">Your invite request will be reviewed by the Unrest team.</p></div>
  </form></div></section>
-<section id="seance" class="sn"><div class="wrap">
- <p class="lb rv">The séance</p>
- <h2 class="d rv">ASK THE <span>HOUSE.</span></h2>
- <p class="sub rv">Something in the house has been moving things around. Ask it a question and it answers one letter at a time. Or put a finger on the planchette and guide it yourself.</p>
- <div class="bd rv" id="bd"></div>
- <div class="rdw"><p class="lb">The spirits say</p><p class="rd" id="rd" aria-hidden="true"></p><p class="sr" id="rds" role="status" aria-live="polite"></p></div>
- <form id="qf" class="look" novalidate>
-  <div class="fld"><label class="lb" for="q">Your question</label><input type="text" id="q" maxlength="80" placeholder="Will I survive the night?" autocomplete="off"></div>
-  <button class="btn" type="submit" id="qb"><span>Summon →</span></button>
- </form>
- <p class="er" id="eq" role="alert" hidden></p>
- <div class="qc" id="qc" role="group" aria-label="Questions to try"></div>
+<section id="summon" class="gh"><div class="wrap">
+ <p class="lb rv">The summoning</p>
+ <h2 class="d rv">SUMMON THE <span>GHOST.</span></h2>
+ <p class="sub rv">Light the candle. Something has been waiting in the dark, and it knows exactly when the party is.</p>
+ <div class="stg rv" id="stg">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="gb" id="gb" aria-hidden="true"></div>
+  <div class="ghw off" id="ghw">
+   <button class="ghb" id="ghb" type="button" aria-label="Poke the ghost">
+    <svg id="gsv" viewBox="0 0 160 212" aria-hidden="true">
+     <defs><radialGradient id="ggr" cx="50%" cy="28%" r="85%"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E4DFD4"/></radialGradient></defs>
+     <ellipse class="ar" cx="12" cy="118" rx="15" ry="9" fill="url(#ggr)" transform="rotate(28 12 118)"/>
+     <ellipse class="ar r" cx="148" cy="118" rx="15" ry="9" fill="url(#ggr)" transform="rotate(-28 148 118)"/>
+     <path d="M18 190V84C18 40 46 12 80 12S142 40 142 84V190Q130 206 118 190T94 190T70 190T46 190T22 190Z" fill="url(#ggr)"/>
+     <ellipse cx="44" cy="106" rx="9" ry="5.5" fill="#FF6A2A" opacity=".2"/>
+     <ellipse cx="116" cy="106" rx="9" ry="5.5" fill="#FF6A2A" opacity=".2"/>
+     <g id="eyes"><ellipse cx="62" cy="82" rx="10" ry="14" fill="#0B0B0C"/><ellipse cx="98" cy="82" rx="10" ry="14" fill="#0B0B0C"/></g>
+     <g id="pups"><circle cx="65" cy="77" r="3.4" fill="#F4F0E8"/><circle cx="101" cy="77" r="3.4" fill="#F4F0E8"/></g>
+     <ellipse class="mo" cx="80" cy="122" rx="8" ry="6" fill="#0B0B0C"/>
+    </svg>
+   </button>
+  </div>
+  <button class="cdl" id="cdl" type="button" aria-pressed="false" aria-label="Light the candle">
+   <svg viewBox="0 0 80 140" aria-hidden="true">
+    <path d="M12 126H68L63 137H17Z" fill="#2A2A2D" stroke="#56565a"/>
+    <rect x="24" y="54" width="32" height="74" rx="5" fill="#E8E2D4"/>
+    <rect x="24" y="54" width="32" height="74" rx="5" fill="#000" opacity=".16"/>
+    <rect x="24" y="54" width="9" height="74" rx="4" fill="#fff" opacity=".18"/>
+    <path d="M24 58Q30 76 35 62V58Z M46 58Q50 70 56 60V58Z" fill="#F5F0E3"/>
+    <ellipse cx="40" cy="54" rx="16" ry="4.5" fill="#F5F0E3"/>
+    <path d="M40 54V44" stroke="#1d1d1f" stroke-width="2.2" stroke-linecap="round"/>
+    <g class="fl"><path d="M40 6C51 22 55 32 40 47C25 32 29 22 40 6Z" fill="#FF6A2A"/><path d="M40 22C46 31 47 37 40 45C33 37 34 31 40 22Z" fill="#FFD9A8"/></g>
+    <path class="sm" d="M40 42C33 32 47 26 40 12" fill="none" stroke="#929292" stroke-width="2" stroke-linecap="round"/>
+   </svg>
+  </button>
+ </div>
+ <p class="lb gcap" id="gcap">Tap the candle to light it</p>
+ <p class="sr" id="gs" role="status" aria-live="polite"></p>
 </div></section>
 
 </main>
@@ -383,9 +438,9 @@ $("#f").onsubmit=function(ev){ev.preventDefault();if(busy)return;
 };
 /* ===== INVITE LOOKUP =====
    lookup = URL of the Apps Script web app in invite-lookup.gs (returns JSON for ?phone=XXXXXXXXXX).
-   UPI    = where the Rs 999 goes. The page builds the UPI link and QR from it.
+   UPI    = where the Rs 799 goes. The page builds the UPI link and QR from it.
    Leave lookup empty for demo mode: 9999999999 = approved, 6666666666 = approved + paid, 8888888888 = pending, 7777777777 = declined. */
-var INVITE={lookup:"https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"},PRICE="Rs 999",AMOUNT=999,UPI={id:"9650692251@pthdfc",name:"Unrest"};
+var INVITE={lookup:"https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"},PRICE="Rs 799",AMOUNT=799,UPI={id:"9650692251@pthdfc",name:"Unrest"};
 function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 var DEMO={};
 function demo(p){return new Promise(function(r){setTimeout(function(){r(p==="9999999999"?{status:"approved",name:"Aarav Sharma",college:"Kirori Mal College",year:"Second Year",pay:DEMO.payer?"verifying":"due",group:DEMO.payer?"https://chat.whatsapp.com/demo":""}:p==="6666666666"?{status:"approved",name:"Meera Kapoor",college:"Hansraj College",year:"First Year",pay:"paid",group:"https://chat.whatsapp.com/demo"}:p==="8888888888"?{status:"pending"}:p==="7777777777"?{status:"declined"}:{status:"none"})},800)})}
@@ -602,60 +657,6 @@ function Board(host,full,opt){
  return{svg:svg,spell:spell,cancel:cancel,busy:function(){return busy}}
 }
 
-/* ---------- the seance ---------- */
-function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
-function T(s){return{t:Array.from(s),x:s}}
-function answer(q){
- var s=q.toLowerCase(),h=hash(s.replace(/[^a-z0-9 ]/g,"").trim());
- function pick(a){return T(a[h%a.length])}
- if(/\b(bye|goodbye|farewell)\b/.test(s))return{t:["GOODBYE"],x:"GOODBYE"};
- if(/\b(die|dead|death|kill|killed|survive|suicide)\b/.test(s))return T("NOT TONIGHT");
- if(/who are you|your name|what are you/.test(s))return T("WE ARE MANY");
- if(/\b(when|date|time|start|starts|begin|day)\b/.test(s))return T("30 OCT 1 PM");
- if(/\b(price|cost|pay|fee|ticket|pass|much|entry)\b|999/.test(s))return T("RS 999");
- if(/\b(host|hosting|hosted|presents?|organi[sz]\w*|unrest)\b/.test(s))return T("UNREST");
- if(/\b(where|venue|location|address)\b/.test(s))return T("THE HOUSE");
- if(/\b(anyone|anybody|ghost|ghosts|spirit|spirits|haunted|watching|alone)\b/.test(s))return{t:["YES"],x:"YES"};
- if(/\bwho\b/.test(s))return pick(["THE DEAD","YOU","ALL OF THEM","NOBODY ALIVE"]);
- if(/^(hi|hello|hey|hola)\b/.test(s))return T("I SEE YOU");
- if(/^(will|am|is|are|do|does|did|can|could|should|would|shall|have|has|was|were)\b/.test(s)||/\?\s*$/.test(s)){var y=h%2===0;return{t:[y?"YES":"NO"],x:y?"YES":"NO"}}
- return pick(["BEWARE","BEHIND YOU","NOT ALONE","THEY ARE WAITING","ENTER IF YOU DARE","TRICK OR TREAT","RUN","SOON"])
-}
-
-var bd=document.getElementById("bd");
-if(bd){
- var rd=document.getElementById("rd"),rds=document.getElementById("rds"),qf=document.getElementById("qf"),qi=document.getElementById("q"),
-  qb=document.getElementById("qb"),eq=document.getElementById("eq"),qc=document.getElementById("qc"),asking=false,fr="",touched=false;
- var bo=Board(bd,true,{
-  locked:function(){return asking},
-  onGrab:function(){touched=true;if(rd.textContent!==fr){rd.textContent="";fr=""}},
-  onPick:function(k){fr+=k.length>1?(fr&&fr.slice(-1)!==" "?" ":"")+k+" ":k;if(fr.length>24)fr=fr.slice(-24);rd.textContent=fr;rds.textContent=k}
- });
- var setAsking=function(v){
-  asking=v;qb.disabled=v;qi.disabled=v;
-  Array.prototype.forEach.call(qc.querySelectorAll("button"),function(b){b.disabled=v});
-  qb.firstChild.textContent=v?"Listening…":"Summon →";qf.setAttribute("aria-busy",String(v))};
- var ask=function(q){
-  var a=answer(q);bo.cancel();touched=true;fr="";rd.textContent="";rds.textContent="";setAsking(true);
-  bo.spell(a.t,function(t){rd.textContent+=t}).then(function(){rds.textContent=a.x;setAsking(false)})};
- qf.onsubmit=function(e){
-  e.preventDefault();if(asking)return;
-  var q=qi.value.trim();
-  if(q.length<2){eq.textContent="Whisper a question first.";eq.hidden=false;qi.setAttribute("aria-invalid","true");qi.focus();return}
-  eq.hidden=true;qi.removeAttribute("aria-invalid");ask(q)};
- qi.addEventListener("input",function(){eq.hidden=true;qi.removeAttribute("aria-invalid")});
- ["When is the party?","Will I survive the night?","Is anyone watching?","Who is hosting?"].forEach(function(t){
-  var b=document.createElement("button");b.type="button";b.textContent=t;
-  b.addEventListener("click",function(){if(asking)return;qi.value=t;ask(t)});qc.appendChild(b)});
- if(!rm&&"IntersectionObserver"in window){
-  var io=new IntersectionObserver(function(es){
-   if(!es[0].isIntersecting)return;io.disconnect();
-   setTimeout(function(){
-    if(touched||asking)return;
-    bo.spell(["H","E","L","L","O"],function(t){rd.textContent+=t}).then(function(){rds.textContent="Hello"})},700)},{threshold:.5});
-  io.observe(bd)}
-}
-
 /* ---------- the invite pass: the board spells the guest's name ---------- */
 function ticket(){
  var host=document.getElementById("ob"),n=document.getElementById("tkn");
@@ -677,6 +678,74 @@ function ticket(){
  host.onclick=function(){if(gone||b.busy())return}
 }
 window.HHOuija={ticket:ticket};
+})();
+</script>
+<script>
+/* ===== ghost summoning ===== */
+(function(){
+"use strict";
+var $=function(s){return document.getElementById(s)},stg=$("stg");
+if(!stg)return;
+var rm=matchMedia("(prefers-reduced-motion: reduce)").matches,
+ ghw=$("ghw"),ghb=$("ghb"),cdl=$("cdl"),gb=$("gb"),gcap=$("gcap"),gs=$("gs"),eyes=$("eyes"),pups=$("pups"),
+ LINES=["Boo. Did I scare you?","30 October. 1 PM to 10 PM. I never miss it.","Unrest presents Trick or Treat. I got my invite early.","Enter if you dare. I did, in 1887.","Request your invite up there. I'll wait. I'm very good at waiting.","Dress code? A sheet. Ghosts are very into sheets.","Tap me again. It tickles."],
+ on=false,shown=false,tk=0,li=0,ty=null,vis=true,raf=0,gx=0,tx=0,px=null,py=null,lastMove=0;
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function say(t){
+ clearInterval(ty);gb.textContent="";gb.classList.add("on");gs.textContent="";
+ if(rm){gb.textContent=t;gs.textContent=t;return}
+ var i=0;ghb.classList.add("talk");
+ ty=setInterval(function(){
+  gb.textContent=t.slice(0,++i);
+  if(i>=t.length){clearInterval(ty);ghb.classList.remove("talk");gs.textContent=t}},36)}
+function hush(){clearInterval(ty);ghb.classList.remove("talk");gb.classList.remove("on");gs.textContent=""}
+function travel(){return Math.max(20,stg.clientWidth/2-ghw.clientWidth/2-18)}
+function frame(t){
+ raf=0;if(!on||!shown||!stg.isConnected)return;
+ var tr=travel(),r=ghw.getBoundingClientRect(),
+  idle=t-lastMove>3200||px===null;
+ tx=idle?Math.sin(t/2600)*tr*.45:tx;
+ var ox=(tx-gx);gx+=ox*.035;
+ ghw.style.transform="translateX(calc(-50% + "+gx.toFixed(1)+"px)) rotate("+clamp(ox*.07,-8,8).toFixed(2)+"deg)";
+ if(px!==null&&!idle){
+  var cx=r.left+r.width/2,cy=r.top+r.height*.4,dx=px-cx,dy=py-cy,d=Math.hypot(dx,dy)||1,k=Math.min(1,d/180);
+  eyes.setAttribute("transform","translate("+(dx/d*4*k).toFixed(2)+" "+(dy/d*5*k).toFixed(2)+")");
+  pups.setAttribute("transform","translate("+(dx/d*6.5*k).toFixed(2)+" "+(dy/d*7.5*k).toFixed(2)+")")}
+ else{eyes.removeAttribute("transform");pups.removeAttribute("transform")}
+ if(vis)raf=requestAnimationFrame(frame)}
+function kick(){if(!raf&&!rm&&on&&shown)raf=requestAnimationFrame(frame)}
+function aim(e){
+ px=e.clientX;py=e.clientY;lastMove=performance.now();
+ var b=stg.getBoundingClientRect();
+ tx=clamp((px-(b.left+b.width/2))*.7,-travel(),travel());kick()}
+window.addEventListener("pointermove",aim,{passive:true});
+stg.addEventListener("pointerdown",aim,{passive:true});
+if("IntersectionObserver"in window)new IntersectionObserver(function(es){vis=es[es.length-1].isIntersecting;if(vis)kick()}).observe(stg);
+function show(){
+ shown=true;gx=0;tx=0;ghw.style.transform="";ghw.classList.remove("off");
+ ghb.className="ghb"+(rm?"":" appear");kick()}
+function light(){
+ on=true;var my=++tk;stg.classList.add("lit");cdl.classList.remove("puff");
+ cdl.setAttribute("aria-pressed","true");cdl.setAttribute("aria-label","Blow out the candle");
+ gcap.textContent="Something stirs…";li=0;
+ setTimeout(function(){
+  if(my!==tk)return;show();
+  setTimeout(function(){if(my!==tk)return;say(LINES[li++]);gcap.textContent="Tap the ghost. Tap the candle to send it back."},rm?0:1500)},rm?0:1100)}
+function blow(){
+ on=false;var my=++tk;stg.classList.remove("lit");hush();
+ cdl.setAttribute("aria-pressed","false");cdl.setAttribute("aria-label","Light the candle");
+ void cdl.offsetWidth;cdl.classList.add("puff");gcap.textContent="Tap the candle to light it";
+ if(!shown)return;
+ if(rm){shown=false;ghw.classList.add("off");return}
+ ghb.className="ghb vanish";
+ setTimeout(function(){
+  if(my!==tk)return;shown=false;ghw.classList.add("off");ghb.className="ghb";
+  eyes.removeAttribute("transform");pups.removeAttribute("transform")},1500)}
+cdl.addEventListener("click",function(){on?blow():light()});
+ghb.addEventListener("click",function(){
+ if(!on||!shown)return;
+ ghb.classList.remove("appear","poke");void ghb.offsetWidth;if(!rm)ghb.classList.add("poke");
+ if(li>=LINES.length)li=1;say(LINES[li++])});
 })();
 </script>
 </body>
