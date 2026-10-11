@@ -170,6 +170,43 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
 .uf .btn{justify-self:start}
 @media(prefers-reduced-motion:reduce){.tkc{transform:none!important}.tk.in{animation:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.rise,h1 .c,.rv{opacity:1;transform:none;filter:none}.vig,.fog,.em,.bat{display:none!important}html{scroll-behavior:auto}.snd.on .eq i{transform:scaleY(.7)}}
+/* ===== ouija seance ===== */
+.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sn{border-top:1px solid var(--char)}
+.sn h2{font-size:clamp(2.4rem,7vw,4rem);line-height:1;margin:12px 0 16px}
+.sn h2 span{color:var(--pump)}
+.sn .sub{max-width:34em;margin-bottom:40px;font-size:.95rem;color:var(--ash)}
+.bd{position:relative;max-width:860px;margin:0 auto}
+.bd::before{content:"";position:absolute;inset:8% 6%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,106,42,.16),transparent);filter:blur(40px);pointer-events:none}
+.ob-svg{display:block;width:100%;height:auto;position:relative}
+.ob-svg .bg{stroke:#3a3a3a;stroke-width:1.5}
+.ob-svg .in{fill:none;stroke:var(--char);stroke-width:1}
+.ob-svg .cap{font:500 11px Inter,sans-serif;letter-spacing:.34em;fill:var(--ash)}
+.ob-svg .ol{font:400 34px Anton,Impact,sans-serif;fill:rgba(244,240,232,.78);transition:fill .35s}
+.ob-svg .ow{font:400 40px Anton,Impact,sans-serif;letter-spacing:.1em;fill:rgba(244,240,232,.9);transition:fill .35s}
+.ob-svg .ol.on,.ob-svg .ow.on{fill:var(--pump)}
+.ob-svg .gl{opacity:0;transition:opacity .4s;pointer-events:none}
+.ob-svg .pl{touch-action:none;cursor:grab}
+.ob-svg .pl.dragging{cursor:grabbing}
+.ob-svg .body{fill:#2a2a2d;fill-opacity:.95;stroke:#76767b;stroke-width:1.5}
+.ob-svg .edge{stroke:#4a4a4e;stroke-width:1}
+.ob-svg .ring{stroke:var(--pump);stroke-width:2.2;animation:rg 3.2s ease-in-out infinite}
+.ob-svg .tip{fill:var(--pump)}
+@keyframes rg{50%{opacity:.4}}
+.om .ol{font-size:19px}
+.om .bg{stroke:#2c2c2c}
+.rdw{margin-top:28px;text-align:center}
+.rd{min-height:1.2em;margin-top:8px;padding-left:.28em;font:400 clamp(1.8rem,6vw,3rem)/1.15 Anton,Impact,sans-serif;letter-spacing:.28em;color:var(--pump);overflow-wrap:anywhere}
+.rd::after,.sp::after{content:"";display:inline-block;width:2px;height:.85em;margin-left:.12em;background:var(--pump);vertical-align:-.08em;animation:cur 1s steps(1) infinite}
+@keyframes cur{50%{opacity:0}}
+.sn .look{max-width:640px;margin:36px auto 0}
+.qc{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:640px;margin:22px auto 0}
+.qc button{padding:10px 18px;border:1px solid var(--char);border-radius:99px;background:transparent;color:var(--ash);font:inherit;font-size:.9rem;cursor:pointer;transition:border-color .25s,color .25s}
+.qc button:hover:not(:disabled){border-color:var(--pump);color:var(--ivory)}
+.qc button:disabled,.btn:disabled{opacity:.45;cursor:default}
+.sn .er{text-align:center}
+.ob{display:block;width:calc(100% - 28px);margin:0 14px 8px;padding:0;border:0;background:none;color:inherit;font:inherit;cursor:pointer}
+.ob svg{display:block;width:100%;height:auto}
 </style>
 </head>
 <body>
@@ -186,7 +223,7 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
   <p class="d ven rise" style="--n:2">HALLOWEEN HOUSE</p>
   <p class="dt rise" style="--n:3">30 OCTOBER 2026 &nbsp;/&nbsp; 1:00 PM — 10:00 PM</p>
   <p class="dare rise" style="--n:4">Enter if you dare.</p>
-  <div class="cta rise" style="--n:5"><a class="btn" href="#request"><span>Request your invite →</span></a><p>Submit your details to request access. Invitations are confirmed after approval.</p><a class="lk" href="#invite">Already requested? View your invite</a></div>
+  <div class="cta rise" style="--n:5"><a class="btn" href="#request"><span>Request your invite →</span></a><p>Submit your details to request access. Invitations are confirmed after approval.</p><a class="lk" href="#invite">Already requested? View your invite</a><a class="lk" href="#seance">Ask the board a question</a></div>
   <div class="cd rise" style="--n:6" id="cd" aria-label="Time until the party" hidden></div>
  </div>
  <svg class="house" viewBox="0 0 600 220" fill="none" stroke="#2c2c2c" stroke-width="1.5" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path d="M20 215h560M80 215V120l40-40 40 40v95M230 215V95l70-62 70 62v120M300 33V10M262 215v-60h76v60M440 215V135l35-45 35 45v80M510 135h30v80M255 95h90M300 95v-18"/><rect class="win" x="108" y="140" width="10" height="14" stroke="none"/><rect class="win" x="284" y="118" width="14" height="18" stroke="none" style="animation-delay:-2s"/><rect class="win" x="468" y="150" width="10" height="14" stroke="none" style="animation-delay:-3.4s"/><rect class="win" x="320" y="118" width="14" height="18" stroke="none" style="animation-delay:-.8s"/></svg>
@@ -220,6 +257,20 @@ footer{border-top:1px solid var(--char);padding:32px 20px;text-align:center;font
   <fieldset><legend class="lb">Year</legend><div class="yr" id="yr"></div><p class="er" id="ey" role="alert" hidden></p></fieldset>
   <div><button class="btn" type="submit" id="sb"><span>Submit for approval →</span></button><p class="note">Your invite request will be reviewed by the Unrest team.</p></div>
  </form></div></section>
+<section id="seance" class="sn"><div class="wrap">
+ <p class="lb rv">The séance</p>
+ <h2 class="d rv">ASK THE <span>HOUSE.</span></h2>
+ <p class="sub rv">Something in the house has been moving things around. Ask it a question and it answers one letter at a time. Or put a finger on the planchette and guide it yourself.</p>
+ <div class="bd rv" id="bd"></div>
+ <div class="rdw"><p class="lb">The spirits say</p><p class="rd" id="rd" aria-hidden="true"></p><p class="sr" id="rds" role="status" aria-live="polite"></p></div>
+ <form id="qf" class="look" novalidate>
+  <div class="fld"><label class="lb" for="q">Your question</label><input type="text" id="q" maxlength="80" placeholder="Will I survive the night?" autocomplete="off"></div>
+  <button class="btn" type="submit" id="qb"><span>Summon →</span></button>
+ </form>
+ <p class="er" id="eq" role="alert" hidden></p>
+ <div class="qc" id="qc" role="group" aria-label="Questions to try"></div>
+</div></section>
+
 </main>
 <footer>Unrest · Halloween House · 30 Oct 2026</footer>
 
@@ -350,7 +401,7 @@ function pass(d,p){
  note=st==="verifying"?'<p class="note">We have your payment details. The Unrest team will match the name to the payment, and this pass will show Confirmed. Join the WhatsApp group meanwhile.</p>':st==="paid"?'<p class="note">Payment received. Join the WhatsApp group for updates. See you on 30 October.</p>':"";
  return '<div class="tk in" id="tk"><div class="tkc" id="tkc">'
  +'<div class="tkh"><svg class="mn" viewBox="0 0 120 120" aria-hidden="true"><path d="M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z" fill="#FF6A2A" opacity=".92"/></svg><p class="lb">Unrest presents</p><p class="tkt">TRICK OR <span>TREAT</span></p><p class="tkv">HALLOWEEN HOUSE</p></div>'
- +'<dl class="tkb"><div class="w2"><dt class="lb">Guest</dt><dd class="nm">'+esc(d.name||"Guest")+'</dd></div>'
+ +'<button class="ob om" id="ob" type="button" title="Tap to spell it again" aria-label="Replay the spelling of your name"></button><dl class="tkb"><div class="w2"><dt class="lb">Guest</dt><dd class="nm"><span class="sr">'+esc(d.name||"Guest")+'</span><span id="tkn" aria-hidden="true" data-n="'+esc(d.name||"Guest")+'">'+esc(d.name||"Guest")+'</span></dd></div>'
  +'<div><dt class="lb">College</dt><dd>'+esc(d.college||"-")+'</dd></div><div><dt class="lb">Year</dt><dd>'+esc(d.year||"-")+'</dd></div>'
  +'<div><dt class="lb">Date</dt><dd>Fri, 30 Oct 2026</dd></div><div><dt class="lb">Time</dt><dd>1:00 PM – 10:00 PM</dd></div></dl>'
  +'<div class="perf" aria-hidden="true"></div>'
@@ -385,7 +436,7 @@ function bindPass(d,p){
    if(!/^[\p{L} .'-]{2,60}$/u.test(u)){err("ut","Enter the name on the account you paid from.");return}
    err("ut","");busy2=true;var l=$("#ub").firstChild;l.textContent="Sending…";
    sendPayer(p,u).then(function(){return look(p)}).then(function(d2){
-    if(d2&&d2.status==="approved"&&(d2.pay==="verifying"||d2.pay==="paid")){res.innerHTML=pass(d2,p);tilt();bindPass(d2,p)}
+    if(d2&&d2.status==="approved"&&(d2.pay==="verifying"||d2.pay==="paid")){res.innerHTML=pass(d2,p);tilt();window.HHOuija&&HHOuija.ticket();bindPass(d2,p)}
     else throw 0;
    }).catch(function(){busy2=false;l.textContent="I have paid →";err("ut","Could not record that. Check your connection and try again.")});
   };
@@ -406,13 +457,216 @@ $("#lf").onsubmit=function(ev){
  lbusy=true;var b=$("#lb").firstChild;b.textContent="Checking…";res.innerHTML="";
  look(p).then(function(d){
   var s=d&&d.status;
-  if(s==="approved"){res.innerHTML=pass(d,p);tilt();bindPass(d,p)}
+  if(s==="approved"){res.innerHTML=pass(d,p);tilt();window.HHOuija&&HHOuija.ticket();bindPass(d,p)}
   else if(s==="pending")res.innerHTML=msg('STILL <span>UNDER REVIEW.</span>',"We have your request. The Unrest team is still reviewing it. Check back soon with the same number.");
   else if(s==="declined")res.innerHTML=msg('NOT THIS <span>TIME.</span>',"We could not approve this request. Reach out to the Unrest team if you think this is a mistake.");
   else res.innerHTML=msg('NO REQUEST <span>FOUND.</span>',"Nothing under that number. Check the digits, or request your invite.",'<a class="lk" href="#request">Request your invite</a>');
   res.focus({preventScroll:true});res.scrollIntoView({behavior:rm?"auto":"smooth",block:"center"});
  }).catch(function(){res.innerHTML=msg('SOMETHING <span>BROKE.</span>',"Could not check right now. Check your connection and try again.")}).then(function(){lbusy=false;b.textContent="View my invite →"});
 };
+})();
+</script>
+<script>
+/* ===== ouija board: seance section + invite pass name spelling ===== */
+(function(){
+"use strict";
+var rm=matchMedia("(prefers-reduced-motion: reduce)").matches,NS="http://www.w3.org/2000/svg",ABC="ABCDEFGHIJKLMNOPQRSTUVWXYZ",uidn=0;
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function norm(c){var s=String(c);try{s=s.normalize("NFD").replace(/[̀-ͯ]/g,"")}catch(e){}return s.toUpperCase()}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+
+/* planchette shape, lens centred on 0,0 */
+var BODY="M0 -66C32 -48 56 -14 54 20C52 46 28 58 0 58C-28 58 -52 46 -54 20C-56 -14 -32 -48 0 -66Z",
+ HOLE="M-24 0a24 24 0 1 0 48 0a24 24 0 1 0 -48 0Z",
+ EDGE="M0 -54C26 -39 46 -11 44 17C42 38 23 48 0 48C-23 48 -42 38 -44 17C-46 -11 -26 -39 0 -54Z";
+
+function Board(host,full,opt){
+ opt=opt||{};
+ var id=++uidn,W=full?800:400,H=full?520:136,S=full?1:.6,pts={},els={},
+ svg=el("svg",{viewBox:"0 0 "+W+" "+H,"class":"ob-svg"+(full?"":" om")});
+ if(full){svg.setAttribute("role","img");svg.setAttribute("aria-label","A ouija board with the alphabet in two arcs, the numbers 0 to 9, YES, NO and GOODBYE")}
+ else svg.setAttribute("aria-hidden","true");
+ var defs=el("defs",{},svg),
+  rg=el("radialGradient",{id:"rg"+id},defs),
+  bgd=el("radialGradient",{id:"bd"+id,cx:"50%",cy:"42%",r:"75%"},defs),
+  fl=el("filter",{id:"bl"+id,x:"-40%",y:"-40%",width:"180%",height:"180%"},defs);
+ el("stop",{offset:"0","stop-color":"#FF6A2A","stop-opacity":".5"},rg);el("stop",{offset:"1","stop-color":"#FF6A2A","stop-opacity":"0"},rg);
+ el("stop",{offset:"0","stop-color":"#19191a"},bgd);el("stop",{offset:"1","stop-color":"#0d0d0e"},bgd);
+ el("feGaussianBlur",{stdDeviation:"7"},fl);
+ el("rect",{x:1,y:1,width:W-2,height:H-2,rx:full?30:14,"class":"bg",fill:"url(#bd"+id+")"},svg);
+ el("rect",{x:full?14:7,y:full?14:7,width:W-(full?28:14),height:H-(full?28:14),rx:full?20:9,"class":"in"},svg);
+ var gl=el("circle",{r:full?30:20,fill:"url(#rg"+id+")","class":"gl"},svg);
+
+ function put(k,x,y,cls,rot,txt){
+  var t=el("text",{x:x,y:y,"text-anchor":"middle",dy:".36em","class":cls},svg);
+  if(rot)t.setAttribute("transform","rotate("+rot+" "+x+" "+y+")");
+  t.textContent=txt||k;pts[k]={x:x,y:y,r:cls==="ow"?48:(full?26:14)};els[k]=t}
+
+ if(full){
+  var cx=400,cy=640;
+  var arc=function(s,R,a0,a1){for(var i=0;i<s.length;i++){var a=a0+(a1-a0)*i/(s.length-1),th=a*Math.PI/180;put(s[i],+(cx+R*Math.sin(th)).toFixed(1),+(cy-R*Math.cos(th)).toFixed(1),"ol",+a.toFixed(1))}};
+  arc(ABC.slice(0,13),430,-40,40);arc(ABC.slice(13),340,-36,36);
+  "1234567890".split("").forEach(function(d,i){put(d,+(215+i*370/9).toFixed(1),432,"ol")});
+  put("YES",150,122,"ow");put("NO",650,122,"ow");put("GOODBYE",400,488,"ow");
+  var mg=el("g",{transform:"translate(371 58) scale(.52)"},svg);
+  el("path",{d:"M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z",fill:"#FF6A2A",opacity:".9"},mg);
+  el("text",{x:400,y:152,"text-anchor":"middle","class":"cap"},svg).textContent="HALLOWEEN HOUSE · 30 OCT";
+  [[44,46],[756,46],[44,476],[756,476]].forEach(function(p){el("text",{x:p[0],y:p[1],"text-anchor":"middle","class":"cap"},svg).textContent="✦"});
+ }else{
+  ABC.split("").forEach(function(c,i){var j=i%13;put(c,+(34+j*27.7).toFixed(1),i<13?46:98,"ol")});
+ }
+
+ var pl=el("g",{"class":"pl"},svg);
+ el("ellipse",{cx:8,cy:16,rx:48,ry:42,fill:"#000","fill-opacity":".5",filter:"url(#bl"+id+")"},pl);
+ el("path",{d:BODY+HOLE,"fill-rule":"evenodd","class":"body"},pl);
+ el("path",{d:EDGE,fill:"none","class":"edge"},pl);
+ el("circle",{r:24,fill:"none","class":"ring"},pl);
+ el("circle",{cy:-50,r:3,"class":"tip"},pl);
+ if(full)el("circle",{r:60,fill:"transparent"},pl);
+ host.appendChild(svg);
+
+ var st={x:0,y:0,r:0},home=full?{x:400,y:372}:{x:200,y:72},mv=null,drag=null,dw={k:null,t:0,done:false},vis=true,raf=0,busy=false,tok=0,lit=null;
+ st.x=home.x;st.y=home.y;
+
+ function draw(t){
+  var ix=0,iy=0,ir=0;
+  if(!rm&&!mv&&!drag){ix=Math.sin(t/1700)*2.4;iy=Math.cos(t/2300)*2.2;ir=Math.sin(t/2900)}
+  pl.setAttribute("transform","translate("+(st.x+ix).toFixed(2)+" "+(st.y+iy).toFixed(2)+") rotate("+(st.r+ir).toFixed(2)+") scale("+S+")")}
+ function near(x,y){var b=null,bd=1e9;for(var k in pts){var p=pts[k],d=Math.hypot(p.x-x,p.y-y);if(d<p.r&&d<bd){bd=d;b=k}}return b}
+ function light(k){
+  if(lit)els[lit].classList.remove("on");
+  lit=k;
+  if(k){els[k].classList.add("on");gl.setAttribute("cx",pts[k].x);gl.setAttribute("cy",pts[k].y);gl.style.opacity=1}
+  else gl.style.opacity=0}
+ function loop(t){
+  raf=0;if(!svg.isConnected)return;
+  if(mv){
+   var p=clamp((t-mv.t0)/mv.d,0,1),e=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2,
+    dx=mv.tx-mv.fx,dy=mv.ty-mv.fy,len=Math.hypot(dx,dy)||1,w=Math.sin(p*Math.PI)*Math.min(16,len*.06);
+   st.x=mv.fx+dx*e-dy/len*w;st.y=mv.fy+dy*e+dx/len*w;st.r=Math.sin(p*Math.PI)*dx/len*6;
+   if(p>=1){var done=mv.res;mv=null;st.r=0;done()}
+  }else if(drag){
+   st.x+=(drag.tx-st.x)*.2;st.y+=(drag.ty-st.y)*.2;st.r+=(clamp((drag.tx-st.x)*.5,-9,9)-st.r)*.15;
+   var k=near(st.x,st.y);
+   if(k!==dw.k)dw={k:k,t:t,done:false};
+   else if(k&&!dw.done&&t-dw.t>650){dw.done=true;light(k);if(opt.onPick)opt.onPick(k)}
+  }
+  draw(t);
+  if(vis||mv||drag)raf=requestAnimationFrame(loop)}
+ function kick(){if(!raf&&!rm)raf=requestAnimationFrame(loop)}
+ if("IntersectionObserver"in window)new IntersectionObserver(function(es){vis=es[es.length-1].isIntersecting;if(vis)kick()}).observe(svg);
+ draw(0);kick();
+
+ function go(x,y){return new Promise(function(res){
+  if(rm){st.x=x;st.y=y;st.r=0;draw(0);res();return}
+  var len=Math.hypot(x-st.x,y-st.y);
+  mv={fx:st.x,fy:st.y,tx:x,ty:y,t0:performance.now(),d:clamp(len*(full?2.6:2),full?380:260,1500),res:res};kick()})}
+ function cancel(){tok++;mv=null;busy=false;light(null)}
+
+ async function spell(tokens,cb,o){
+  o=o||{};var my=++tok,i;busy=true;drag=null;
+  if(rm){
+   tokens.forEach(function(t){if(cb)cb(t)});
+   var lk=null;for(i=tokens.length-1;i>=0&&!lk;i--)if(pts[norm(tokens[i])])lk=norm(tokens[i]);
+   if(lk){st.x=pts[lk].x;st.y=pts[lk].y;draw(0);light(lk)}
+   busy=false;return}
+  for(i=0;i<tokens.length;i++){
+   var t=tokens[i],k=norm(t),c=pts[k];
+   if(c){light(null);await go(c.x,c.y);if(my!==tok)return;light(k);if(cb)cb(t);await wait(o.dwell||(full?380:200))}
+   else{if(cb)cb(t);await wait(t===" "?220:80)}
+   if(my!==tok)return}
+  light(null);await go(home.x,home.y);if(my===tok)busy=false}
+
+ if(full){
+  var pt=function(e){var p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())};
+  pl.addEventListener("pointerdown",function(e){
+   if(busy){if(opt.locked&&opt.locked())return;cancel()}
+   e.preventDefault();var q=pt(e);
+   drag={ox:st.x-q.x,oy:st.y-q.y,tx:st.x,ty:st.y};dw={k:null,t:0,done:false};
+   pl.classList.add("dragging");try{pl.setPointerCapture(e.pointerId)}catch(_){}
+   if(opt.onGrab)opt.onGrab();kick()});
+  pl.addEventListener("pointermove",function(e){
+   if(!drag)return;var q=pt(e);
+   drag.tx=clamp(q.x+drag.ox,24,W-24);drag.ty=clamp(q.y+drag.oy,24,H-24);
+   if(rm){st.x=drag.tx;st.y=drag.ty;draw(0)}});
+  var up=function(){
+   if(!drag)return;
+   var k=near(st.x,st.y);if(k&&!dw.done){light(k);if(opt.onPick)opt.onPick(k)}
+   drag=null;pl.classList.remove("dragging")};
+  pl.addEventListener("pointerup",up);pl.addEventListener("pointercancel",up);
+ }
+ return{svg:svg,spell:spell,cancel:cancel,busy:function(){return busy}}
+}
+
+/* ---------- the seance ---------- */
+function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function T(s){return{t:Array.from(s),x:s}}
+function answer(q){
+ var s=q.toLowerCase(),h=hash(s.replace(/[^a-z0-9 ]/g,"").trim());
+ function pick(a){return T(a[h%a.length])}
+ if(/\b(bye|goodbye|farewell)\b/.test(s))return{t:["GOODBYE"],x:"GOODBYE"};
+ if(/\b(die|dead|death|kill|killed|survive|suicide)\b/.test(s))return T("NOT TONIGHT");
+ if(/who are you|your name|what are you/.test(s))return T("WE ARE MANY");
+ if(/\b(when|date|time|start|starts|begin|day)\b/.test(s))return T("30 OCT 1 PM");
+ if(/\b(price|cost|pay|fee|ticket|pass|much|entry)\b|799/.test(s))return T("RS 799");
+ if(/\b(host|hosting|hosted|presents?|organi[sz]\w*|unrest)\b/.test(s))return T("UNREST");
+ if(/\b(where|venue|location|address)\b/.test(s))return T("THE HOUSE");
+ if(/\b(anyone|anybody|ghost|ghosts|spirit|spirits|haunted|watching|alone)\b/.test(s))return{t:["YES"],x:"YES"};
+ if(/\bwho\b/.test(s))return pick(["THE DEAD","YOU","ALL OF THEM","NOBODY ALIVE"]);
+ if(/^(hi|hello|hey|hola)\b/.test(s))return T("I SEE YOU");
+ if(/^(will|am|is|are|do|does|did|can|could|should|would|shall|have|has|was|were)\b/.test(s)||/\?\s*$/.test(s)){var y=h%2===0;return{t:[y?"YES":"NO"],x:y?"YES":"NO"}}
+ return pick(["BEWARE","BEHIND YOU","NOT ALONE","THEY ARE WAITING","ENTER IF YOU DARE","TRICK OR TREAT","RUN","SOON"])
+}
+
+var bd=document.getElementById("bd");
+if(bd){
+ var rd=document.getElementById("rd"),rds=document.getElementById("rds"),qf=document.getElementById("qf"),qi=document.getElementById("q"),
+  qb=document.getElementById("qb"),eq=document.getElementById("eq"),qc=document.getElementById("qc"),asking=false,fr="",touched=false;
+ var bo=Board(bd,true,{
+  locked:function(){return asking},
+  onGrab:function(){touched=true;if(rd.textContent!==fr){rd.textContent="";fr=""}},
+  onPick:function(k){fr+=k.length>1?(fr&&fr.slice(-1)!==" "?" ":"")+k+" ":k;if(fr.length>24)fr=fr.slice(-24);rd.textContent=fr;rds.textContent=k}
+ });
+ var setAsking=function(v){
+  asking=v;qb.disabled=v;qi.disabled=v;
+  Array.prototype.forEach.call(qc.querySelectorAll("button"),function(b){b.disabled=v});
+  qb.firstChild.textContent=v?"Listening…":"Summon →";qf.setAttribute("aria-busy",String(v))};
+ var ask=function(q){
+  var a=answer(q);bo.cancel();touched=true;fr="";rd.textContent="";rds.textContent="";setAsking(true);
+  bo.spell(a.t,function(t){rd.textContent+=t}).then(function(){rds.textContent=a.x;setAsking(false)})};
+ qf.onsubmit=function(e){
+  e.preventDefault();if(asking)return;
+  var q=qi.value.trim();
+  if(q.length<2){eq.textContent="Whisper a question first.";eq.hidden=false;qi.setAttribute("aria-invalid","true");qi.focus();return}
+  eq.hidden=true;qi.removeAttribute("aria-invalid");ask(q)};
+ qi.addEventListener("input",function(){eq.hidden=true;qi.removeAttribute("aria-invalid")});
+ ["When is the party?","Will I survive the night?","Is anyone watching?","Who is hosting?"].forEach(function(t){
+  var b=document.createElement("button");b.type="button";b.textContent=t;
+  b.addEventListener("click",function(){if(asking)return;qi.value=t;ask(t)});qc.appendChild(b)});
+ if(!rm&&"IntersectionObserver"in window){
+  var io=new IntersectionObserver(function(es){
+   if(!es[0].isIntersecting)return;io.disconnect();
+   setTimeout(function(){
+    if(touched||asking)return;
+    bo.spell(["H","E","L","L","O"],function(t){rd.textContent+=t}).then(function(){rds.textContent="Hello"})},700)},{threshold:.5});
+  io.observe(bd)}
+}
+
+/* ---------- the invite pass: the board spells the guest's name ---------- */
+function ticket(){
+ var host=document.getElementById("ob"),n=document.getElementById("tkn");
+ if(!host||!n)return;
+ var name=n.getAttribute("data-n")||"",chars=Array.from(name),b=Board(host,false);
+ if(rm){n.textContent=name;return}
+ var play=function(){
+  n.textContent="";n.classList.add("sp");
+  b.spell(chars,function(t){n.textContent+=t},{dwell:chars.length>20?120:200}).then(function(){n.classList.remove("sp")})};
+ n.textContent="";n.classList.add("sp");
+ setTimeout(play,1100);
+ host.onclick=function(){if(!b.busy())play()}
+}
+window.HHOuija={ticket:ticket};
 })();
 </script>
 </body>
