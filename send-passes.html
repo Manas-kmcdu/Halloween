@@ -53,11 +53,11 @@ function parse(){
    else if(!r.c&&/[A-Za-z]{2}/.test(c))r.c=c});
   if(r.p&&!seen[r.p]){seen[r.p]=1;r.n=r.n||"Guest";r.id=r.id||"UH-"+r.p.slice(-4);rows.push(r)}})}
 function text(r){return $("msg").value.replace(/{name}/g,r.n.split(" ")[0]).replace(/{id}/g,r.id).replace(/{phone}/g,r.p)}
-function wa(r){return "https://wa.me/91"+r.p+"?text="+encodeURIComponent(text(r))}
+function wa(r){return "https://wa.me/91"+r.p}
 function fit(x,t,font,max){var s=parseInt(font);x.font=font;while(x.measureText(t).width>max&&s>20){s-=2;x.font=font.replace(/\d+px/,s+"px")}}
 function pass(r){
  return document.fonts.load("100px Anton").then(function(){return document.fonts.load("600 30px Inter")}).catch(function(){}).then(function(){
-  var W=1080,H=1500,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+  var W=1080,H=1800,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
   var g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#161617");g.addColorStop(.6,"#0d0d0e");x.fillStyle=g;x.fillRect(0,0,W,H);
   var rg=x.createRadialGradient(W-100,100,0,W-100,100,420);rg.addColorStop(0,"rgba(255,106,42,.28)");rg.addColorStop(1,"rgba(255,106,42,0)");x.fillStyle=rg;x.fillRect(0,0,W,H);
   x.strokeStyle="#3a3a3a";x.lineWidth=3;x.strokeRect(30,30,W-60,H-60);
@@ -81,6 +81,11 @@ function pass(r){
   x.strokeStyle="rgba(255,106,42,.6)";x.lineWidth=3;x.beginPath();if(x.roundRect)x.roundRect(700,1290,290,70,35);else x.rect(700,1290,290,70);x.stroke();
   x.fillStyle="#FF6A2A";x.beginPath();x.arc(740,1325,8,0,7);x.fill();T("APPROVED",770,1335,"600 26px Inter,sans-serif","#FF6A2A","5px");
   T("PASS ID  "+r.id,90,1440,"600 28px Inter,sans-serif","#F4F0E8","5px");
+  x.fillStyle="#292929";x.fillRect(90,1490,900,2);
+  T("TO CONFIRM YOUR PASS",90,1555,"500 24px Inter,sans-serif","#929292","6px");
+  T("Pay Rs 999 on UPI to",90,1615,"600 36px Inter,sans-serif","#F4F0E8");
+  T("9650692251@pthdfc",90,1685,"72px Anton,Impact,sans-serif","#FF6A2A","2px");
+  T("Put "+r.id+" in the remark, then reply with the name on your UPI account.",90,1740,"500 28px Inter,sans-serif","#F4F0E8");
   return new Promise(function(res){c.toBlob(res,"image/png")})})}
 window.addEventListener("unhandledrejection",function(e){toast("Error: "+(e.reason&&e.reason.message||e.reason))});
 function mark(r){sent[r.p]=1;S("sp2-sent",JSON.stringify(sent));render()}
@@ -104,7 +109,7 @@ function render(){
  $("cnt").textContent=rows.length?rows.length+" people, "+left+" left":"";$("nb").hidden=!rows.length;$("list").innerHTML="";
  rows.forEach(function(r){var d=document.createElement("div");d.className="row"+(sent[r.p]?" done":"");
   d.innerHTML='<div class="n"><b></b><span></span></div>';d.querySelector("b").textContent=r.n;d.querySelector("span").textContent="+91 "+r.p+" · "+r.id+(sent[r.p]?" · sent":"");
-  [["Preview","g",function(){prev(r)}],["Download","g",function(){dl(r,pass(r))}],["Send on WhatsApp","",function(){share(r)}]].forEach(function(b){var e=document.createElement("button");e.textContent=b[0];if(b[1])e.className=b[1];e.onclick=b[2];d.appendChild(e)});
+  [["Preview","g",function(){prev(r)}],["Download","g",function(){dl(r,pass(r))}],["Copy caption","g",function(){navigator.clipboard.writeText(text(r)).then(function(){toast("Caption copied. Paste it as a second message.")})}],["Send on WhatsApp","",function(){share(r)}]].forEach(function(b){var e=document.createElement("button");e.textContent=b[0];if(b[1])e.className=b[1];e.onclick=b[2];d.appendChild(e)});
   $("list").appendChild(d)})}
 $("go").onclick=function(){parse();render()};$("msg").oninput=render;
 $("next").onclick=function(){var r=rows.filter(function(r){return !sent[r.p]})[0];if(r)share(r)};
