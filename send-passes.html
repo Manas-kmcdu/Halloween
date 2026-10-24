@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <title>Send Passes (image)</title>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -34,8 +35,8 @@ button.g{background:transparent;color:var(--fg);border-color:#4a4a4a}
 </main><div id="toast"></div>
 <script>
 var $=function(i){return document.getElementById(i)},S=function(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}};
-var DEF="Hi {name}! You're in 🎃\nYour pass for Trick or Treat, Halloween House by Unrest is attached.\n\nSat 31 Oct, 1 PM to 10 PM.\n\nTo confirm it, pay Rs 999 on UPI to 9650692251@pthdfc and put {id} in the remark. Reply here with the name on the account you paid from, and we'll mark your pass Confirmed.\n\nSee you there! Team Unrest";
-$("msg").value=S("sp2-msg")||DEF;$("data").value=S("sp2-data")||"";
+var DEF="Hi {name}! You're in 🎃\nYour pass for Trick or Treat, Halloween House by Unrest is attached.\n\nSat 31 Oct, 1 PM to 10 PM.\n\nTo confirm it, scan the QR on the pass and pay Rs 999. If the account you pay from isn't in your name, add your name in the remark.\n\nSee you there! Team Unrest";
+$("msg").value=S("sp3-msg")||DEF;$("data").value=S("sp2-data")||"";
 var rows=[],sent=JSON.parse(S("sp2-sent")||"{}");
 function toast(t){var e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(function(){e.style.display="none"},6000)}
 function parse(){
@@ -57,9 +58,9 @@ function wa(r){return "https://wa.me/91"+r.p}
 function fit(x,t,font,max){var s=parseInt(font);x.font=font;while(x.measureText(t).width>max&&s>20){s-=2;x.font=font.replace(/\d+px/,s+"px")}}
 function pass(r){
  return document.fonts.load("100px Anton").then(function(){return document.fonts.load("600 30px Inter")}).catch(function(){}).then(function(){
-  var W=1080,H=1800,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+  var W=1720,H=1500,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
   var g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#161617");g.addColorStop(.6,"#0d0d0e");x.fillStyle=g;x.fillRect(0,0,W,H);
-  var rg=x.createRadialGradient(W-100,100,0,W-100,100,420);rg.addColorStop(0,"rgba(255,106,42,.28)");rg.addColorStop(1,"rgba(255,106,42,0)");x.fillStyle=rg;x.fillRect(0,0,W,H);
+  var rg=x.createRadialGradient(980,100,0,980,100,420);rg.addColorStop(0,"rgba(255,106,42,.28)");rg.addColorStop(1,"rgba(255,106,42,0)");x.fillStyle=rg;x.fillRect(0,0,W,H);
   x.strokeStyle="#3a3a3a";x.lineWidth=3;x.strokeRect(30,30,W-60,H-60);
   x.save();x.translate(790,70);x.scale(3.3,3.3);x.fillStyle="#FF6A2A";x.globalAlpha=.92;x.fill(new Path2D("M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z"));x.restore();
   x.textBaseline="alphabetic";
@@ -76,16 +77,26 @@ function pass(r){
   T(r.y||"-",640,955,"600 38px Inter,sans-serif","#F4F0E8");
   T("DATE",90,1050,"500 24px Inter,sans-serif","#929292","6px");T("TIME",640,1050,"500 24px Inter,sans-serif","#929292","6px");
   T("Sat, 31 Oct 2026",90,1105,"600 38px Inter,sans-serif","#F4F0E8");T("1:00 PM – 10:00 PM",640,1105,"600 38px Inter,sans-serif","#F4F0E8");
-  x.setLineDash([14,12]);x.strokeStyle="#3a3a3a";x.lineWidth=3;x.beginPath();x.moveTo(60,1190);x.lineTo(W-60,1190);x.stroke();x.setLineDash([]);
+  x.setLineDash([14,12]);x.strokeStyle="#3a3a3a";x.lineWidth=3;x.beginPath();x.moveTo(60,1190);x.lineTo(1020,1190);x.stroke();x.setLineDash([]);
   T("PASS PRICE",90,1265,"500 24px Inter,sans-serif","#929292","6px");T("Rs 999",90,1370,"120px Anton,Impact,sans-serif","#FF6A2A","2px");
   x.strokeStyle="rgba(255,106,42,.6)";x.lineWidth=3;x.beginPath();if(x.roundRect)x.roundRect(700,1290,290,70,35);else x.rect(700,1290,290,70);x.stroke();
   x.fillStyle="#FF6A2A";x.beginPath();x.arc(740,1325,8,0,7);x.fill();T("APPROVED",770,1335,"600 26px Inter,sans-serif","#FF6A2A","5px");
   T("PASS ID  "+r.id,90,1440,"600 28px Inter,sans-serif","#F4F0E8","5px");
-  x.fillStyle="#292929";x.fillRect(90,1490,900,2);
-  T("TO CONFIRM YOUR PASS",90,1555,"500 24px Inter,sans-serif","#929292","6px");
-  T("Pay Rs 999 on UPI to",90,1615,"600 36px Inter,sans-serif","#F4F0E8");
-  T("9650692251@pthdfc",90,1685,"72px Anton,Impact,sans-serif","#FF6A2A","2px");
-  T("Put "+r.id+" in the remark, then reply with the name on your UPI account.",90,1740,"500 28px Inter,sans-serif","#F4F0E8");
+  x.setLineDash([14,12]);x.strokeStyle="#3a3a3a";x.lineWidth=3;x.beginPath();x.moveTo(1080,60);x.lineTo(1080,H-60);x.stroke();x.setLineDash([]);
+  var cx=1400;
+  T("PAY TO CONFIRM",cx,150,"500 24px Inter,sans-serif","#929292","6px","center");
+  T("Rs 999",cx,275,"120px Anton,Impact,sans-serif","#FF6A2A","2px","center");
+  var upi="upi://pay?pa="+encodeURIComponent("9650692251@pthdfc")+"&pn=Unrest&am=999&cu=INR&tn="+encodeURIComponent("Halloween House");
+  x.fillStyle="#F4F0E8";x.fillRect(1170,320,460,460);
+  if(window.qrcode){var q=qrcode(0,"M");q.addData(upi);q.make();var n=q.getModuleCount(),m=2,u=420/(n+2*m);x.fillStyle="#0B0B0C";for(var a=0;a<n;a++)for(var b=0;b<n;b++)if(q.isDark(a,b))x.fillRect(1190+(b+m)*u,340+(a+m)*u,Math.ceil(u),Math.ceil(u))}
+  else T("QR unavailable",cx,560,"600 30px Inter,sans-serif","#0B0B0C","0px","center");
+  T("SCAN WITH ANY UPI APP",cx,845,"500 22px Inter,sans-serif","#929292","5px","center");
+  T("or pay to UPI ID",cx,930,"500 28px Inter,sans-serif","#F4F0E8","0px","center");
+  x.letterSpacing="0px";fit(x,"9650692251@pthdfc","52px Anton,Impact,sans-serif",560);var f3=x.font;
+  T("9650692251@pthdfc",cx,1000,f3,"#FF6A2A","2px","center");
+  x.fillStyle="#292929";x.fillRect(1150,1060,500,2);
+  var steps=["1. Scan the QR or use the UPI ID.","2. Pay Rs 999.","3. If the account you pay from is not in your name, add your name in the remark."],yy=1125;
+  steps.forEach(function(s){var words=s.split(" "),line="";words.forEach(function(w){var t2=line?line+" "+w:w;x.font="500 28px Inter,sans-serif";x.letterSpacing="0px";if(x.measureText(t2).width>500&&line){T(line,1150,yy,"500 28px Inter,sans-serif","#F4F0E8");yy+=40;line=w}else line=t2});T(line,1150,yy,"500 28px Inter,sans-serif","#F4F0E8");yy+=60});
   return new Promise(function(res){c.toBlob(res,"image/png")})})}
 window.addEventListener("unhandledrejection",function(e){toast("Error: "+(e.reason&&e.reason.message||e.reason))});
 function mark(r){sent[r.p]=1;S("sp2-sent",JSON.stringify(sent));render()}
@@ -104,7 +115,7 @@ function fallback(r,bp){
 function dl(r,bp){return bp.then(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=r.n.replace(/\W+/g,"_")+"_pass.png";a.click();toast("Pass downloaded. Attach it in the chat with the paperclip.");mark(r)})}
 function prev(r){toast("Building pass…");pass(r).then(function(b){if(!b)throw new Error("empty image");var i=$("pv");i.onload=function(){i.style.display="block";$("toast").style.display="none"};i.onerror=function(){toast("Image failed to load")};i.src=URL.createObjectURL(b);i.onclick=function(){i.style.display="none"}}).catch(function(e){toast("Pass build failed: "+(e&&e.message||e))})}
 function render(){
- S("sp2-msg",$("msg").value);S("sp2-data",$("data").value);
+ S("sp3-msg",$("msg").value);S("sp2-data",$("data").value);
  var left=rows.filter(function(r){return !sent[r.p]}).length;
  $("cnt").textContent=rows.length?rows.length+" people, "+left+" left":"";$("nb").hidden=!rows.length;$("list").innerHTML="";
  rows.forEach(function(r){var d=document.createElement("div");d.className="row"+(sent[r.p]?" done":"");
