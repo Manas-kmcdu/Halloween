@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Send Passes (image)</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0B0C;--fg:#F4F0E8;--o:#FF6A2A;--g:#929292;--l:#292929}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif;padding:24px 16px 90px}
+main{max-width:760px;margin:0 auto}h1{font-size:1.6rem;margin:0 0 4px}p.s{color:var(--g);margin:0 0 24px}
+label{display:block;margin:20px 0 6px;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--g)}
+input,textarea{width:100%;background:#141416;color:var(--fg);border:1px solid var(--l);border-radius:6px;padding:10px;font:inherit}
+textarea{min-height:110px;resize:vertical}
+button{cursor:pointer;border:1px solid var(--o);background:var(--o);color:var(--bg);font:600 13px system-ui;padding:9px 16px;border-radius:6px}
+button.g{background:transparent;color:var(--fg);border-color:#4a4a4a}
+.row{display:flex;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--l)}
+.row .n{flex:1;min-width:0}.row .n b{display:block}.row .n span{color:var(--g);font-size:13px}
+.row.done{opacity:.45}.bar{display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--o);color:var(--bg);font-weight:600;padding:12px 18px;border-radius:8px;max-width:90vw;display:none}
+#pv{position:fixed;inset:0;margin:auto;max-height:92vh;max-width:92vw;z-index:10;border-radius:6px;display:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.85);cursor:pointer}
+</style></head><body><main>
+<h1>Send passes on WhatsApp (as image)</h1>
+<p class="s">Each person gets their own pass PNG. Everything stays in your browser.</p>
+
+<label>Approved people: paste rows from your sheet (name, phone, college, year, optional pass ID like UH-1234)</label>
+<textarea id="data" placeholder="Aarav Sharma	9876543210	Kirori Mal College	Second Year	Approved"></textarea>
+<div class="bar"><button id="go">Build list</button><span id="cnt" style="color:var(--g)"></span></div>
+
+<label>Caption sent with the pass ({name}, {id}, {phone})</label>
+<textarea id="msg" style="min-height:170px"></textarea>
+
+<div id="list" style="margin-top:24px"></div>
+<img id="pv" alt="Pass preview">
+<div class="bar" id="nb" hidden><button id="next">Send next unsent →</button><button class="g" id="reset">Reset sent marks</button></div>
+</main><div id="toast"></div>
+<script>
+var $=function(i){return document.getElementById(i)},S=function(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}};
+var DEF="Hi {name}! You're in 🎃\nYour pass for Trick or Treat, Halloween House by Unrest is attached.\n\nSat 31 Oct, 1 PM to 10 PM.\n\nTo confirm it, pay Rs 999 on UPI to 9650692251@pthdfc and put {id} in the remark. Reply here with the name on the account you paid from, and we'll mark your pass Confirmed.\n\nSee you there! Team Unrest";
+$("msg").value=S("sp2-msg")||DEF;$("data").value=S("sp2-data")||"";
+var rows=[],sent=JSON.parse(S("sp2-sent")||"{}");
+function toast(t){var e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(function(){e.style.display="none"},6000)}
+function parse(){
+ var lines=$("data").value.split(/\r?\n/).filter(function(l){return l.trim()}),filt=/approved/i.test(lines.join("\n")),seen={};rows=[];
+ lines.forEach(function(l){
+  if(filt&&!/approved/i.test(l))return;
+  var r={n:"",p:"",c:"",y:"",id:""};
+  l.split(/\t|,/).map(function(c){return c.trim()}).filter(Boolean).forEach(function(c){
+   var d=c.replace(/[\s-]/g,"").replace(/^(\+91|91|0)(?=\d{10}$)/,"");
+   if(!r.p&&/^[6-9]\d{9}$/.test(d))r.p=d;
+   else if(/^UH-/i.test(c))r.id=c.toUpperCase();
+   else if(/^approved$/i.test(c)||/^(paid|pending|due|declined)$/i.test(c)){}
+   else if(!r.y&&/(first|second|third|fourth|fifth|1st|2nd|3rd|4th|5th)\s*year|^year/i.test(c))r.y=c;
+   else if(!r.n&&/[A-Za-z]{2}/.test(c))r.n=c;
+   else if(!r.c&&/[A-Za-z]{2}/.test(c))r.c=c});
+  if(r.p&&!seen[r.p]){seen[r.p]=1;r.n=r.n||"Guest";r.id=r.id||"UH-"+r.p.slice(-4);rows.push(r)}})}
+function text(r){return $("msg").value.replace(/{name}/g,r.n.split(" ")[0]).replace(/{id}/g,r.id).replace(/{phone}/g,r.p)}
+function wa(r){return "https://wa.me/91"+r.p+"?text="+encodeURIComponent(text(r))}
+function fit(x,t,font,max){var s=parseInt(font);x.font=font;while(x.measureText(t).width>max&&s>20){s-=2;x.font=font.replace(/\d+px/,s+"px")}}
+function pass(r){
+ return document.fonts.load("100px Anton").then(function(){return document.fonts.load("600 30px Inter")}).catch(function(){}).then(function(){
+  var W=1080,H=1500,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+  var g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#161617");g.addColorStop(.6,"#0d0d0e");x.fillStyle=g;x.fillRect(0,0,W,H);
+  var rg=x.createRadialGradient(W-100,100,0,W-100,100,420);rg.addColorStop(0,"rgba(255,106,42,.28)");rg.addColorStop(1,"rgba(255,106,42,0)");x.fillStyle=rg;x.fillRect(0,0,W,H);
+  x.strokeStyle="#3a3a3a";x.lineWidth=3;x.strokeRect(30,30,W-60,H-60);
+  x.save();x.translate(790,70);x.scale(3.3,3.3);x.fillStyle="#FF6A2A";x.globalAlpha=.92;x.fill(new Path2D("M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z"));x.restore();
+  x.textBaseline="alphabetic";
+  function T(t,px,py,font,col,ls,al){x.font=font;x.fillStyle=col;x.letterSpacing=ls||"0px";x.textAlign=al||"left";x.fillText(t,px,py)}
+  T("UNREST PRESENTS",90,160,"500 28px Inter,sans-serif","#929292","8px");
+  T("TRICK OR",90,350,"150px Anton,Impact,sans-serif","#F4F0E8","2px");
+  T("TREAT",90,500,"150px Anton,Impact,sans-serif","#FF6A2A","2px");
+  T("HALLOWEEN HOUSE",90,580,"46px Anton,Impact,sans-serif","#F4F0E8","16px");
+  x.fillStyle="#292929";x.fillRect(90,640,900,2);
+  T("GUEST",90,710,"500 24px Inter,sans-serif","#929292","6px");
+  x.letterSpacing="2px";fit(x,r.n.toUpperCase(),"96px Anton,Impact,sans-serif",900);var f=x.font;T(r.n.toUpperCase(),90,810,f,"#F4F0E8","2px");
+  T("COLLEGE",90,900,"500 24px Inter,sans-serif","#929292","6px");T("YEAR",640,900,"500 24px Inter,sans-serif","#929292","6px");
+  x.letterSpacing="0px";fit(x,r.c||"-","600 38px Inter,sans-serif",520);var f2=x.font;T(r.c||"-",90,955,f2,"#F4F0E8");
+  T(r.y||"-",640,955,"600 38px Inter,sans-serif","#F4F0E8");
+  T("DATE",90,1050,"500 24px Inter,sans-serif","#929292","6px");T("TIME",640,1050,"500 24px Inter,sans-serif","#929292","6px");
+  T("Sat, 31 Oct 2026",90,1105,"600 38px Inter,sans-serif","#F4F0E8");T("1:00 PM – 10:00 PM",640,1105,"600 38px Inter,sans-serif","#F4F0E8");
+  x.setLineDash([14,12]);x.strokeStyle="#3a3a3a";x.lineWidth=3;x.beginPath();x.moveTo(60,1190);x.lineTo(W-60,1190);x.stroke();x.setLineDash([]);
+  T("PASS PRICE",90,1265,"500 24px Inter,sans-serif","#929292","6px");T("Rs 999",90,1370,"120px Anton,Impact,sans-serif","#FF6A2A","2px");
+  x.strokeStyle="rgba(255,106,42,.6)";x.lineWidth=3;x.beginPath();if(x.roundRect)x.roundRect(700,1290,290,70,35);else x.rect(700,1290,290,70);x.stroke();
+  x.fillStyle="#FF6A2A";x.beginPath();x.arc(740,1325,8,0,7);x.fill();T("APPROVED",770,1335,"600 26px Inter,sans-serif","#FF6A2A","5px");
+  T("PASS ID  "+r.id,90,1440,"600 28px Inter,sans-serif","#F4F0E8","5px");
+  return new Promise(function(res){c.toBlob(res,"image/png")})})}
+window.addEventListener("unhandledrejection",function(e){toast("Error: "+(e.reason&&e.reason.message||e.reason))});
+function mark(r){sent[r.p]=1;S("sp2-sent",JSON.stringify(sent));render()}
+function share(r){
+ var bp=pass(r),mobile=matchMedia("(pointer:coarse)").matches;
+ if(mobile&&navigator.canShare){
+  return bp.then(function(b){var f=new File([b],r.id+".png",{type:"image/png"});
+   if(navigator.canShare({files:[f]}))return navigator.share({files:[f],text:text(r)}).then(function(){mark(r)}).catch(function(){});
+   return fallback(r,bp)})}
+ return fallback(r,bp)}
+function fallback(r,bp){
+ var ok=window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write;
+ var w=window.open(wa(r),"_blank");
+ if(ok){return navigator.clipboard.write([new ClipboardItem({"image/png":bp})]).then(function(){toast("Chat opened. Click the message box, press Ctrl+V (Cmd+V), then send.");mark(r)}).catch(function(){dl(r,bp)})}
+ return dl(r,bp)}
+function dl(r,bp){return bp.then(function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=r.n.replace(/\W+/g,"_")+"_pass.png";a.click();toast("Pass downloaded. Attach it in the chat with the paperclip.");mark(r)})}
+function prev(r){toast("Building pass…");pass(r).then(function(b){if(!b)throw new Error("empty image");var i=$("pv");i.onload=function(){i.style.display="block";$("toast").style.display="none"};i.onerror=function(){toast("Image failed to load")};i.src=URL.createObjectURL(b);i.onclick=function(){i.style.display="none"}}).catch(function(e){toast("Pass build failed: "+(e&&e.message||e))})}
+function render(){
+ S("sp2-msg",$("msg").value);S("sp2-data",$("data").value);
+ var left=rows.filter(function(r){return !sent[r.p]}).length;
+ $("cnt").textContent=rows.length?rows.length+" people, "+left+" left":"";$("nb").hidden=!rows.length;$("list").innerHTML="";
+ rows.forEach(function(r){var d=document.createElement("div");d.className="row"+(sent[r.p]?" done":"");
+  d.innerHTML='<div class="n"><b></b><span></span></div>';d.querySelector("b").textContent=r.n;d.querySelector("span").textContent="+91 "+r.p+" · "+r.id+(sent[r.p]?" · sent":"");
+  [["Preview","g",function(){prev(r)}],["Download","g",function(){dl(r,pass(r))}],["Send on WhatsApp","",function(){share(r)}]].forEach(function(b){var e=document.createElement("button");e.textContent=b[0];if(b[1])e.className=b[1];e.onclick=b[2];d.appendChild(e)});
+  $("list").appendChild(d)})}
+$("go").onclick=function(){parse();render()};$("msg").oninput=render;
+$("next").onclick=function(){var r=rows.filter(function(r){return !sent[r.p]})[0];if(r)share(r)};
+$("reset").onclick=function(){sent={};S("sp2-sent","{}");render()};
+if($("data").value){parse();render()}
+</script></body></html>
