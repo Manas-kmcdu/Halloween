@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Pay | Trick or Treat, Halloween House</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+/* ===== STYLE KNOBS: change colours here ===== */
+:root{--night:#0B0B0C;--ivory:#F4F0E8;--accent:#FF6A2A;--ash:#929292;--line:#292929}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{background:var(--night)}
+body{min-height:100svh;background:radial-gradient(circle at 85% -5%,rgba(255,106,42,.22),transparent 45%),var(--night);color:var(--ivory);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;padding:max(24px,env(safe-area-inset-top)) 20px max(40px,env(safe-area-inset-bottom))}
+.d{font-family:Anton,Impact,sans-serif;font-weight:400}
+.lb{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.22em;color:var(--ash)}
+main{max-width:440px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top .d{font-size:1.2rem;letter-spacing:.2em}
+.moon{width:34px}
+h1{margin-top:28px;font-size:clamp(3rem,16vw,4.6rem);line-height:.95;letter-spacing:.015em}
+h1 span{color:var(--accent)}
+.ven{margin-top:12px;font-size:1.05rem;letter-spacing:.34em}
+.chip{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:8px 14px;border:1px solid rgba(255,106,42,.55);border-radius:99px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.2em;color:var(--accent)}
+.chip i{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px 2px var(--accent)}
+.card{margin-top:28px;padding:26px;border:1px solid #3a3a3a;border-radius:8px;background:linear-gradient(165deg,#161617,#0d0d0e 62%);box-shadow:0 40px 90px -45px rgba(255,106,42,.5)}
+.price{margin-top:6px;font-size:4rem;line-height:1;letter-spacing:.02em;color:var(--accent)}
+.qr{width:min(100%,260px);margin:22px auto 0;padding:12px;border-radius:6px;background:var(--ivory)}
+.qr svg{display:block;width:100%;height:auto}
+.scan{margin-top:12px;text-align:center}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;height:54px;margin-top:20px;border:1px solid var(--accent);border-radius:4px;background:var(--accent);color:var(--night);font:600 .85rem Inter,sans-serif;text-transform:uppercase;letter-spacing:.16em;text-decoration:none;cursor:pointer}
+.btn.g{background:transparent;color:var(--ivory);border-color:#4a4a4a;height:44px;margin:0;width:auto;padding:0 18px;font-size:.72rem}
+.btn:active{opacity:.85}
+.upi{margin-top:24px;padding-top:20px;border-top:1px dashed #3a3a3a}
+.upi .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;flex-wrap:wrap}
+.upi b{font:400 1.45rem Anton,sans-serif;letter-spacing:.04em;overflow-wrap:anywhere;color:var(--ivory)}
+.note{margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:6px;font-size:.92rem;color:rgba(244,240,232,.85)}
+.note b{color:var(--ivory)}
+dl{margin-top:24px;border-top:1px solid var(--line)}
+dl div{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+dd{text-align:right;font-weight:500}
+footer{margin-top:32px;text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--accent);color:var(--night);font-weight:600;padding:10px 18px;border-radius:99px;opacity:0;transition:opacity .25s;pointer-events:none}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<main>
+ <div class="top"><span class="d">UNREST</span><svg class="moon" viewBox="0 0 120 120" aria-hidden="true"><path d="M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z" fill="#FF6A2A" opacity=".92"/></svg></div>
+ <p class="lb" style="margin-top:36px">Unrest presents</p>
+ <h1 class="d">TRICK OR <span>TREAT</span></h1>
+ <p class="d ven">HALLOWEEN HOUSE</p>
+ <span class="chip"><i></i><span id="count">&nbsp;</span></span>
+
+ <section class="card" aria-label="Payment">
+  <p class="lb">Pass price</p>
+  <p class="d price" id="price"></p>
+  <div class="qr" id="qr" hidden></div>
+  <p class="lb scan" id="scan" hidden>Scan with any UPI app</p>
+  <a class="btn" id="open" href="#" hidden>Open UPI app →</a>
+  <div class="upi">
+   <p class="lb">UPI ID</p>
+   <div class="row"><b id="upi"></b><button class="btn g" id="cp" type="button">Copy</button></div>
+  </div>
+ </section>
+
+ <p class="note"><b>Paying from an account that is not in your name?</b> Add your own name in the remark so we can match your payment.</p>
+
+ <dl>
+  <div><dt class="lb">Date</dt><dd id="date"></dd></div>
+  <div><dt class="lb">Time</dt><dd id="time"></dd></div>
+  <div><dt class="lb">Location</dt><dd id="loc"></dd></div>
+ </dl>
+ <footer>Unrest · Halloween House</footer>
+</main>
+<div id="toast" role="status"></div>
+<script>
+/* ===== EDIT THESE ===== */
+var CONFIG={
+ price:999,
+ upiId:"9650692251@pthdfc",
+ payee:"Unrest",
+ note:"Halloween House",          // default remark that UPI apps pre-fill
+ eventDate:"2026-10-31",          // YYYY-MM-DD (counts calendar days in IST)
+ dateText:"Saturday, 31 October 2026",
+ timeText:"1:00 PM – 10:00 PM",
+ location:"To be announced"       // change when finalised
+};
+var $=function(i){return document.getElementById(i)};
+$("price").textContent="Rs "+CONFIG.price;
+$("upi").textContent=CONFIG.upiId;
+$("date").textContent=CONFIG.dateText;$("time").textContent=CONFIG.timeText;$("loc").textContent=CONFIG.location;
+
+/* days to go, in IST */
+var today=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"}).split("-").map(Number),ev=CONFIG.eventDate.split("-").map(Number),
+ n=Math.round((Date.UTC(ev[0],ev[1]-1,ev[2])-Date.UTC(today[0],today[1]-1,today[2]))/864e5);
+$("count").textContent=n>1?n+" days to go":n===1?"Tomorrow":n===0?"Tonight":"See you next time";
+
+/* UPI link + QR */
+var link="upi://pay?pa="+encodeURIComponent(CONFIG.upiId)+"&pn="+encodeURIComponent(CONFIG.payee)+"&am="+CONFIG.price+"&cu=INR&tn="+encodeURIComponent(CONFIG.note);
+try{
+ if(window.qrcode){
+  var q=qrcode(0,"M");q.addData(link);q.make();
+  var c=q.getModuleCount(),m=2,z=c+2*m,d="";
+  for(var r=0;r<c;r++)for(var k=0;k<c;k++)if(q.isDark(r,k))d+="M"+(k+m)+" "+(r+m)+"h1v1h-1z";
+  $("qr").innerHTML='<svg viewBox="0 0 '+z+' '+z+'" shape-rendering="crispEdges" role="img" aria-label="UPI QR code"><rect width="'+z+'" height="'+z+'" fill="#F4F0E8"/><path d="'+d+'" fill="#0B0B0C"/></svg>';
+  $("qr").hidden=false;$("scan").hidden=false}
+}catch(e){}
+if(matchMedia("(pointer:coarse)").matches){$("open").href=link;$("open").hidden=false}
+
+/* copy */
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("on")},1800)}
+$("cp").onclick=function(){
+ function ok(){toast("UPI ID copied")}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(CONFIG.upiId).then(ok,function(){toast("Press and hold the ID to copy")});
+ else{var t=document.createElement("textarea");t.value=CONFIG.upiId;document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(e){toast("Press and hold the ID to copy")}t.remove()}
+};
+</script>
+</body>
+</html>
