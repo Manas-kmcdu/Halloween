@@ -35,7 +35,7 @@ button.g{background:transparent;color:var(--fg);border-color:#4a4a4a}
 </main><div id="toast"></div>
 <script>
 var $=function(i){return document.getElementById(i)},S=function(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}};
-var DEF="Hi {name}! You're in 🎃\nYour pass for Trick or Treat, Halloween House by Unrest is attached.\n\nSat 31 Oct, 1 PM to 10 PM.\n\nTo confirm it, scan the QR on the pass and pay Rs 999. If the account you pay from isn't in your name, add your name in the remark.\n\nSee you there! Team Unrest";
+var DEF="Hi {name}! You're in 🎃\nYour pass for Trick or Treat, Halloween House by Unrest is attached.\n\nSun 1 Nov, 1 PM to 10 PM.\n\nTo confirm it, scan the QR on the pass and pay Rs 999. If the account you pay from isn't in your name, add your name in the remark.\n\nSee you there! Team Unrest";
 $("msg").value=S("sp3-msg")||DEF;$("data").value=S("sp2-data")||"";
 var rows=[],sent=JSON.parse(S("sp2-sent")||"{}");
 function toast(t){var e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(function(){e.style.display="none"},6000)}
@@ -76,7 +76,7 @@ function pass(r){
   x.letterSpacing="0px";fit(x,r.c||"-","600 38px Inter,sans-serif",520);var f2=x.font;T(r.c||"-",90,955,f2,"#F4F0E8");
   T(r.y||"-",640,955,"600 38px Inter,sans-serif","#F4F0E8");
   T("DATE",90,1050,"500 24px Inter,sans-serif","#929292","6px");T("TIME",640,1050,"500 24px Inter,sans-serif","#929292","6px");
-  T("Sat, 31 Oct 2026",90,1105,"600 38px Inter,sans-serif","#F4F0E8");T("1:00 PM – 10:00 PM",640,1105,"600 38px Inter,sans-serif","#F4F0E8");
+  T("Sun, 1 Nov 2026",90,1105,"600 38px Inter,sans-serif","#F4F0E8");T("1:00 PM – 10:00 PM",640,1105,"600 38px Inter,sans-serif","#F4F0E8");
   x.setLineDash([14,12]);x.strokeStyle="#3a3a3a";x.lineWidth=3;x.beginPath();x.moveTo(60,1190);x.lineTo(1020,1190);x.stroke();x.setLineDash([]);
   T("PASS PRICE",90,1265,"500 24px Inter,sans-serif","#929292","6px");T("Rs 999",90,1370,"120px Anton,Impact,sans-serif","#FF6A2A","2px");
   x.strokeStyle="rgba(255,106,42,.6)";x.lineWidth=3;x.beginPath();if(x.roundRect)x.roundRect(700,1290,290,70,35);else x.rect(700,1290,290,70);x.stroke();
