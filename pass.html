@@ -31,10 +31,12 @@ input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--f
 hr{border:0;border-top:2px dashed #3a3a3a;margin:24px 0 0}
 .pid{margin-top:16px;font-weight:600;letter-spacing:.2em;font-size:13px;text-align:left}
 .chip{display:inline-block;margin-top:14px;padding:6px 14px;border:1px solid rgba(255,106,42,.55);border-radius:99px;color:var(--o);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.org{display:block;margin-top:0;background:transparent;color:var(--fg);border:1px solid var(--o);text-align:center}
+.org:hover{background:var(--o);color:var(--bg)}
 .bat{position:fixed;top:-40px;font-size:26px;opacity:.5;z-index:1;animation:fall linear infinite;pointer-events:none}
 @keyframes fall{to{transform:translateY(110vh) translateX(40px) rotate(25deg)}}
 </style></head><body>
-<div class="card" id="c"></div>
+<div class="card"><div id="c"></div></div>
 <script>
 var LOOKUP="https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec",
 PAY="https://halloween.unrestdu.in/pay.html",SITE="https://halloween.unrestdu.in/",
@@ -51,9 +53,9 @@ function form(err){
 function oops(){
  c.innerHTML='<div class="pump">🎃</div><h1>Oops<em>!</em></h1>'
  +'<p>Looks like you haven\u2019t confirmed your invite yet. Pay for your pass to lock in your spot.</p>'
- +'<a class="btn" href="'+PAY+'">Confirm my invite →</a><br><button class="btn g" onclick="form()">Check another number</button>'}
+ +'<a class="btn" href="'+PAY+'">Confirm my invite →</a><br><button class="btn g" data-again="1">Check another number</button>'}
 function msg(h,t,extra){
- c.innerHTML='<div class="pump">👻</div><h1>'+h+'</h1><p>'+t+'</p>'+(extra||"")+'<br><button class="btn g" onclick="form()">Check another number</button>'}
+ c.innerHTML='<div class="pump">👻</div><h1>'+h+'</h1><p>'+t+'</p>'+(extra||"")+'<br><button class="btn g" data-again="1">Check another number</button>'}
 function pass(d,p){
  var id=d.id||"UH-"+p.slice(-4);
  c.innerHTML='<div class="eyebrow">Unrest presents</div><h1>Trick or <em>Treat</em></h1><div class="sub">HALLOWEEN HOUSE</div>'
@@ -61,17 +63,20 @@ function pass(d,p){
  +'<div class="grid"><div><div class="lbl t">College</div><div class="val">'+esc(d.college||"-")+'</div></div><div><div class="lbl t">Year</div><div class="val">'+esc(d.year||"-")+'</div></div>'
  +'<div><div class="lbl t">Date</div><div class="val">Sun, 1 Nov 2026</div></div><div><div class="lbl t">Time</div><div class="val">1 PM – 10 PM</div></div></div>'
  +'<hr><div class="pid">PASS ID &nbsp;'+esc(id)+'</div>'
- +'<div class="chip">'+(d.pay==="paid"?"Confirmed":"Verifying payment")+'</div>'}
+ +'<div class="chip">'+(d.pay==="paid"?"Confirmed":d.pay==="verifying"?"Verifying":"Not Confirmed")+'</div>'
+ +(d.pay==="paid"||d.pay==="verifying"?"":'<p style="margin:16px 0 0">Pay to confirm your spot.</p><div style="margin-top:12px"><a class="btn" href="'+PAY+'">Pay Rs 999 to confirm →</a></div>')
+ +'<div style="margin-top:12px"><a class="btn org" href="https://wa.me/919650692251?text=Hi%20Unrest%2C%20I%20need%20help%20with%20my%20Halloween%20House%20invite." target="_blank" rel="noopener noreferrer">Talk to the organiser</a></div>'
+ +'<br><button class="btn g" data-again="1">Check another number</button>'}
 function check(p){
  var b=document.getElementById("b");if(b){b.disabled=true;b.textContent="Checking…"}
  fetch(LOOKUP+(LOOKUP.indexOf("?")<0?"?":"&")+"phone="+encodeURIComponent(p)).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
   var s=d&&d.status;
-  if(s==="approved"&&(d.pay==="paid"||d.pay==="verifying"))pass(d,p);
-  else if(s==="approved")oops();                       /* approved but not paid: not confirmed yet */
+  if(s==="approved")pass(d,p);
   else if(s==="pending")msg('Under <em>review</em>',"We have your request. The Unrest team is still reviewing it. Check back soon.");
   else if(s==="declined")msg('Not this <em>time</em>',"We could not approve this request. Reach out to the Unrest team if you think this is a mistake.");
   else oops();                                         /* no pass found */
  }).catch(function(){form("Could not check right now. Check your connection and try again.")})}
+c.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("[data-again]"))form()});
 form();
 var q=clean(new URLSearchParams(location.search).get("phone"));if(/^[6-9]\d{9}$/.test(q))check(q);
 for(var i=0;i<9;i++){var x=document.createElement("div");x.className="bat";x.textContent=i%3?"🦇":"👻";x.style.left=(i*11+Math.random()*8)+"%";x.style.animationDuration=(9+Math.random()*8)+"s";x.style.animationDelay=(-Math.random()*12)+"s";document.body.appendChild(x)}
