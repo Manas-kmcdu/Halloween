@@ -44,7 +44,7 @@ c=document.getElementById("c");
 function esc(s){var d=document.createElement("div");d.textContent=s==null?"":s;return d.innerHTML}
 function clean(v){return String(v||"").replace(/[\s-]/g,"").replace(/^(\+91|91|0)(?=\d{10}$)/,"")}
 function form(err){
- c.innerHTML='<div class="pump">🎃</div><h1>Your <em>invite</em></h1><div class="sub">HALLOWEEN HOUSE</div>'
+ c.innerHTML='<div class="pump"></div><h1>Your <em>invite</em></h1><div class="sub">HALLOWEEN HOUSE</div>'
  +'<form id="f" novalidate><label class="lbl" for="p">Contact number</label><div class="pf"><b>+91</b><input id="p" inputmode="tel" placeholder="10-digit mobile number" autocomplete="tel"></div>'
  +'<p class="er" id="e">'+esc(err||"")+'</p><button class="btn" id="b" type="submit" style="width:100%">Check my invite →</button></form>';
  document.getElementById("f").onsubmit=function(ev){ev.preventDefault();var p=clean(document.getElementById("p").value);
