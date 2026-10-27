@@ -79,5 +79,5 @@ function check(p){
 c.addEventListener("click",function(e){if(e.target.closest&&e.target.closest("[data-again]"))form()});
 form();
 var q=clean(new URLSearchParams(location.search).get("phone"));if(/^[6-9]\d{9}$/.test(q))check(q);
-for(var i=0;i<9;i++){var x=document.createElement("div");x.className="bat";x.textContent=i%3?"🦇":"👻";x.style.left=(i*11+Math.random()*8)+"%";x.style.animationDuration=(9+Math.random()*8)+"s";x.style.animationDelay=(-Math.random()*12)+"s";document.body.appendChild(x)}
+for(var i=0;i<9;i++){var x=document.createElement("div");x.className="bat";x.textContent=i%3?"boo":"";x.style.left=(i*11+Math.random()*8)+"%";x.style.animationDuration=(9+Math.random()*8)+"s";x.style.animationDelay=(-Math.random()*12)+"s";document.body.appendChild(x)}
 </script></body></html>
