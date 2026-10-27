@@ -64,7 +64,7 @@ function pass(d,p){
  +'<div><div class="lbl t">Date</div><div class="val">Sun, 1 Nov 2026</div></div><div><div class="lbl t">Time</div><div class="val">1 PM – 10 PM</div></div></div>'
  +'<hr><div class="pid">PASS ID &nbsp;'+esc(id)+'</div>'
  +'<div class="chip">'+(d.pay==="paid"?"Confirmed":d.pay==="verifying"?"Verifying":"Not Confirmed")+'</div>'
- +(d.pay==="paid"||d.pay==="verifying"?"":'<p style="margin:16px 0 0">Pay to confirm your spot.</p><div style="margin-top:12px"><a class="btn" href="'+PAY+'">Pay Rs 999 to confirm →</a></div>')
+ +(d.pay==="paid"||d.pay==="verifying"?"":'<p style="margin:16px 0 0"></p><div style="margin-top:12px"><a class="btn" href="'+PAY+'">Pay Rs 999 to confirm →</a></div>')
  +'<div style="margin-top:12px"><a class="btn org" href="https://wa.me/919650692251?text=Hi%20Unrest%2C%20I%20need%20help%20with%20my%20Halloween%20House%20invite." target="_blank" rel="noopener noreferrer">Talk to the organiser</a></div>'
  +'<br><button class="btn g" data-again="1">Check another number</button>'}
 function check(p){
