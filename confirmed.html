@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B0B0C">
+<title>Your Pass — Trick or Treat | Unrest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0B0B0C;--ivory:#F4F0E8;--pump:#FF6A2A;--ash:#929292;--char:#292929}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html,body{background:var(--night)}
+body{color:var(--ivory);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100svh;overflow-x:hidden;padding:max(20px,env(safe-area-inset-top)) 20px max(32px,env(safe-area-inset-bottom));-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0,rgba(255,106,42,.16),transparent 55%),radial-gradient(ellipse at 50% 110%,rgba(255,106,42,.08),transparent 50%)}
+a{color:inherit;text-decoration:none}
+.d{font-family:Anton,Impact,sans-serif;font-weight:400}
+.lb{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.22em;color:var(--ash)}
+main{position:relative;max-width:420px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;padding:4px 0 28px}
+header .d{font-size:1.2rem;letter-spacing:.2em}
+.lk{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:var(--ash);border-bottom:1px solid var(--char);padding-bottom:3px;background:none;border-top:0;border-inline:0;cursor:pointer;font-family:inherit}
+.lk:active{color:var(--pump)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 26px;border:1px solid var(--pump);background:var(--pump);color:var(--night);font:600 .8rem Inter,sans-serif;text-transform:uppercase;letter-spacing:.18em;cursor:pointer;transition:transform .15s,box-shadow .3s}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.5}
+.btn.g{background:transparent;color:var(--ivory);border-color:#3a3a3a;height:46px;padding:0 18px;font-size:.7rem}
+.btn.g.p{border-color:var(--pump);color:var(--pump)}
+h1.d{font-size:clamp(2.4rem,13vw,3.4rem);line-height:.98;letter-spacing:.015em;margin:10px 0 12px}
+h1 span{color:var(--pump)}
+.sub{color:var(--ash);font-size:.95rem;max-width:26em}
+/* lookup */
+#lk{margin-top:32px;display:grid;gap:22px}
+.pf{display:flex;align-items:center;gap:12px;margin-top:8px;border-bottom:1px solid var(--char);transition:border-color .3s}
+.pf:focus-within,.pf.bad{border-color:var(--pump)}
+.pf b{font-weight:500;font-size:1.2rem;color:var(--ash)}
+.pf input{flex:1;min-width:0;padding:12px 0;border:0;background:transparent;color:var(--ivory);font:inherit;font-size:1.2rem;letter-spacing:.06em;outline:none;border-radius:0}
+.pf input::placeholder{color:#4a4a4a}
+.er{margin-top:8px;font-size:.875rem;color:var(--pump)}
+.er[hidden]{display:none}
+.msg{margin-top:28px;padding:24px;border:1px solid var(--char);animation:up .7s cubic-bezier(.22,1,.36,1) both}
+.msg h2{font:400 1.7rem/1.05 Anton,sans-serif;letter-spacing:.02em}
+.msg h2 span{color:var(--pump)}
+.msg p{margin-top:12px;font-size:.95rem;color:rgba(244,240,232,.75)}
+.msg .btn{margin-top:18px}
+.ld{margin-top:40px;text-align:center;animation:pl 1.4s ease-in-out infinite}
+@keyframes pl{50%{opacity:.35}}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+/* hero + confirmed */
+#ok{display:none}
+#ok.on{display:block}
+.hd{animation:up .8s cubic-bezier(.22,1,.36,1) both}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid rgba(255,106,42,.5);border-radius:99px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:var(--pump)}
+.pill i{width:6px;height:6px;border-radius:50%;background:var(--pump);box-shadow:0 0 10px 2px var(--pump);animation:pl 2s infinite}
+/* pass */
+.scene{margin-top:28px;perspective:1000px;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:pointer}
+.scene.in{animation:drop 1.3s cubic-bezier(.22,1,.36,1) .25s both}
+@keyframes drop{0%{opacity:0;transform:translateY(80px) rotateX(35deg) scale(.9);filter:blur(10px)}60%{opacity:1;filter:none}100%{opacity:1;transform:none;filter:none}}
+.tl{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .35s ease-out}
+.tl.drag{transition:none}
+.fl{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.fl.flip{transform:rotateY(180deg)}
+.face{position:relative;overflow:hidden;border:1px solid #3a3a3a;border-radius:10px;background:linear-gradient(165deg,#181819,#0d0d0e 62%);box-shadow:0 40px 80px -36px rgba(255,106,42,.55);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.face.bk{position:absolute;inset:0;transform:rotateY(180deg);display:flex;flex-direction:column}
+.face::before{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,106,42,.22),transparent);pointer-events:none}
+.gl{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),rgba(255,255,255,.2),transparent 45%);mix-blend-mode:overlay;opacity:var(--go,0);transition:opacity .3s}
+.th{position:relative;padding:24px 22px 12px}
+.th .mn{position:absolute;right:20px;top:18px;width:42px;animation:mg 6s ease-in-out infinite}
+@keyframes mg{50%{filter:drop-shadow(0 0 20px rgba(255,106,42,.7))}}
+.tt{margin-top:12px;font:400 clamp(2.3rem,12vw,2.9rem)/.95 Anton,sans-serif;letter-spacing:.015em}
+.tt span{color:var(--pump)}
+.tv{margin-top:8px;font:400 .9rem/1 Anton,sans-serif;letter-spacing:.34em}
+.tb{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;padding:14px 22px 22px}
+.tb .w{grid-column:1/-1}
+.tb dt{margin-bottom:3px}
+.tb dd{font-size:.95rem;font-weight:500;overflow-wrap:anywhere}
+.tb .nm{font:400 1.9rem/1.05 Anton,sans-serif;letter-spacing:.02em}
+.pf2{position:relative;height:0;margin:0 12px;border-top:1.5px dashed #3a3a3a}
+.pf2::before,.pf2::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--night);border:1px solid #3a3a3a}
+.pf2::before{left:-24px}.pf2::after{right:-24px}
+.ft{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:20px 22px 22px}
+.pid{font:400 1.6rem/1 Anton,sans-serif;letter-spacing:.08em;margin-top:4px}
+.stamp{position:absolute;right:16px;bottom:58px;padding:6px 12px;border:2.5px solid var(--pump);border-radius:6px;font:400 1.35rem/1 Anton,sans-serif;letter-spacing:.12em;color:var(--pump);transform:rotate(-12deg);opacity:0;pointer-events:none}
+.scene.in .stamp{animation:stamp .5s cubic-bezier(.3,1.6,.5,1) 1.5s both}
+@keyframes stamp{0%{opacity:0;transform:rotate(-12deg) scale(3)}60%{opacity:1}100%{opacity:.95;transform:rotate(-12deg) scale(1)}}
+.hint{margin-top:14px;text-align:center}
+/* back */
+.bk .th{padding-bottom:6px}
+.bk ul{position:relative;list-style:none;padding:8px 22px;display:grid;gap:14px;font-size:.92rem;color:rgba(244,240,232,.8)}
+.bk li{display:flex;gap:12px}.bk li b{color:var(--pump);font:400 1rem Anton,sans-serif;letter-spacing:.06em}
+.bk .big{position:relative;margin:auto 22px 22px;padding:16px;border:1px dashed #3a3a3a;border-radius:6px;text-align:center}
+.bk .big p.d{font-size:2.1rem;letter-spacing:.1em;color:var(--pump);margin-top:2px}
+/* countdown */
+.cdw{margin-top:34px;text-align:center}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.cd div{padding:16px 0 12px;border:1px solid var(--char);border-radius:8px;background:rgba(255,255,255,.015)}
+.cd b{display:block;font:400 clamp(1.9rem,10vw,2.6rem)/1 Anton,sans-serif;font-variant-numeric:tabular-nums}
+.cd b.t{animation:tk .35s ease-out}
+@keyframes tk{from{transform:translateY(-8px);opacity:.3;color:var(--pump)}to{transform:none;opacity:1}}
+.cd .lb{display:block;margin-top:6px;font-size:10px}
+.cdw .big{font:400 clamp(2rem,11vw,3rem)/1 Anton,sans-serif;color:var(--pump);margin-top:14px}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;justify-content:center}
+.acts .btn{flex:1 1 150px}
+.em{position:fixed;left:50%;top:38%;width:4px;height:4px;border-radius:50%;background:var(--pump);box-shadow:0 0 10px 2px rgba(255,106,42,.7);pointer-events:none;z-index:9;animation:bu 1.6s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes bu{to{transform:translate(var(--x),var(--y));opacity:0}}
+footer{margin-top:44px;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}.stamp{opacity:.95}}
+</style>
+</head>
+<body>
+<main>
+<header><span class="d">UNREST</span><a class="lk" href="index.html">Home</a></header>
+
+<section id="gate">
+ <p class="lb">Trick or Treat · Halloween House</p>
+ <h1 class="d">YOUR <span>PASS.</span></h1>
+ <p class="sub">Enter the number you applied with. If your pass is confirmed, it shows up here.</p>
+ <form id="lk" novalidate>
+  <div><label class="lb" for="ph">Contact number</label>
+   <div class="pf" id="pf"><b>+91</b><input id="ph" type="text" inputmode="tel" placeholder="10-digit mobile number" autocomplete="tel"></div>
+   <p class="er" id="er" role="alert" hidden></p></div>
+  <button class="btn" id="go" type="submit"><span>Show my pass →</span></button>
+ </form>
+ <div id="out" aria-live="polite"></div>
+</section>
+
+<section id="ok">
+ <div class="hd"><span class="pill"><i></i>Pass confirmed</span>
+ <h1 class="d" id="hi">YOU'RE <span>IN.</span></h1>
+ <p class="sub">Tap the pass to flip it. Drag to tilt.</p></div>
+
+ <div class="scene" id="sc" role="button" tabindex="0" aria-label="Your pass. Press to flip.">
+  <div class="tl" id="tl"><div class="fl" id="fl">
+   <div class="face">
+    <div class="th"><svg class="mn" viewBox="0 0 120 120" aria-hidden="true"><path d="M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z" fill="#FF6A2A" opacity=".92"/></svg><p class="lb">Unrest presents</p><p class="tt">TRICK OR <span>TREAT</span></p><p class="tv">HALLOWEEN HOUSE</p></div>
+    <dl class="tb">
+     <div class="w"><dt class="lb">Guest</dt><dd class="nm" id="gn"></dd></div>
+     <div><dt class="lb">College</dt><dd id="gc"></dd></div>
+     <div><dt class="lb">Year</dt><dd id="gy"></dd></div>
+     <div><dt class="lb">Date</dt><dd>Sun, 1 Nov 2026</dd></div>
+     <div><dt class="lb">Time</dt><dd>1:00 PM – 10:00 PM</dd></div>
+    </dl>
+    <div class="pf2" aria-hidden="true"></div>
+    <div class="ft"><div><p class="lb">Pass ID</p><p class="pid" id="pi"></p></div></div>
+    <div class="stamp">CONFIRMED</div>
+    <div class="gl"></div>
+   </div>
+   <div class="face bk" aria-hidden="true">
+    <div class="th"><p class="lb">Unrest presents</p><p class="tt">HOUSE <span>RULES</span></p></div>
+    <ul>
+     <li><b>01</b>Show this pass at the gate.</li>
+     <li><b>02</b>Carry a college ID. Name must match.</li>
+     <li><b>03</b>Dress to scare. Costumes encouraged.</li>
+     <li><b>04</b>Passes are non-transferable.</li>
+    </ul>
+    <div class="big"><p class="lb">Pass ID</p><p class="d" id="pb"></p></div>
+    <div class="gl"></div>
+   </div>
+  </div></div>
+ </div>
+ <p class="lb hint" id="ht">Tap to flip</p>
+
+ <div class="cdw">
+  <p class="lb" id="cl">Doors open in</p>
+  <div class="cd" id="cd"></div>
+  <p class="big" id="cb" hidden></p>
+  <p class="lb" style="margin-top:12px">Sun 1 Nov 2026 · 1:00 PM IST</p>
+ </div>
+
+ <div class="acts">
+  <a class="btn" id="wa" href="#" target="_blank" rel="noopener noreferrer" hidden><span>Join WhatsApp group</span></a>
+  <button class="btn g p" id="ics" type="button">Add to calendar</button>
+  <button class="btn g" id="shr" type="button">Share</button>
+ </div>
+ <footer><button class="lk" id="out2" type="button">Not you? Use another number</button></footer>
+</section>
+</main>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)},
+ rm=matchMedia("(prefers-reduced-motion: reduce)").matches,
+ LOOKUP="https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec",
+ START=new Date("2026-11-01T13:00:00+05:30").getTime(),END=new Date("2026-11-01T22:00:00+05:30").getTime(),
+ KEY="hh-phone";
+function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function clean(v){return v.replace(/[\s-]/g,"").replace(/^(\+91|91|0)(?=\d{10}$)/,"")}
+function msg(h,t,l){$("#out").innerHTML='<div class="msg"><h2>'+h+'</h2><p>'+t+'</p>'+(l||"")+'</div>'}
+function er(m){$("#er").hidden=!m;$("#er").textContent=m||"";$("#pf").classList.toggle("bad",!!m)}
+function look(p){return fetch(LOOKUP+"?phone="+encodeURIComponent(p)).then(function(r){if(!r.ok)throw 0;return r.json()})}
+
+var busy=false,cur=null;
+function run(p,auto){
+ if(busy)return;busy=true;$("#out").innerHTML='<p class="lb ld">Checking the guest list…</p>';$("#go").disabled=true;
+ look(p).then(function(d){
+  var s=d&&d.status;
+  if(s==="approved"&&d.pay==="paid"){try{localStorage.setItem(KEY,p)}catch(e){}$("#out").innerHTML="";show(d,p)}
+  else if(s==="approved"&&d.pay==="verifying")msg('PAYMENT <span>VERIFYING.</span>',"We have your payment details. Once the Unrest team matches the name, your pass flips to confirmed here. Check back soon.");
+  else if(s==="approved")msg('APPROVED. <span>PAY TO CONFIRM.</span>',"Your invite is approved but the pass is not paid yet. Pay from your invite page to confirm it.",'<a class="btn" href="index.html#invite"><span>Go to my invite →</span></a>');
+  else if(s==="pending")msg('STILL <span>UNDER REVIEW.</span>',"We have your request. The team is still reviewing it. Check back with the same number.");
+  else if(s==="declined")msg('NOT THIS <span>TIME.</span>',"We could not approve this request. Reach out to the Unrest team if you think this is a mistake.");
+  else msg('NO REQUEST <span>FOUND.</span>',"Nothing under that number. Check the digits, or request your invite.",'<a class="btn" href="index.html#request"><span>Request invite →</span></a>');
+ }).catch(function(){if(auto)try{localStorage.removeItem(KEY)}catch(e){};msg('SOMETHING <span>BROKE.</span>',"Could not check right now. Check your connection and try again.")})
+ .then(function(){busy=false;$("#go").disabled=false});
+}
+$("#ph").addEventListener("input",function(){er("");$("#out").innerHTML=""});
+$("#lk").onsubmit=function(e){e.preventDefault();var p=clean($("#ph").value);
+ if(!/^[6-9]\d{9}$/.test(p)){er("Enter a valid 10-digit mobile number.");return}er("");run(p)};
+$("#out2").onclick=function(){try{localStorage.removeItem(KEY)}catch(e){}cur=null;$("#ok").classList.remove("on");$("#gate").hidden=false;$("#ph").value="";$("#out").innerHTML="";scrollTo(0,0)};
+
+/* show confirmed pass */
+function show(d,p){
+ cur=d;
+ var id=d.id||"UH-"+p.slice(-4),first=String(d.name||"Guest").split(" ")[0].toUpperCase();
+ $("#gn").textContent=d.name||"Guest";$("#gc").textContent=d.college||"-";$("#gy").textContent=d.year||"-";
+ $("#pi").textContent=id;$("#pb").textContent=id;
+ $("#hi").innerHTML="YOU'RE IN, <span>"+esc(first)+".</span>";
+ var wa=$("#wa");if(/^https:\/\/chat\.whatsapp\.com\//.test(d.group||"")){wa.href=d.group;wa.hidden=false}else wa.hidden=true;
+ $("#gate").hidden=true;$("#ok").classList.add("on");scrollTo(0,0);
+ var sc=$("#sc");sc.classList.remove("in");void sc.offsetWidth;sc.classList.add("in");
+ if(!rm){setTimeout(burst,1500);if(navigator.vibrate)setTimeout(function(){navigator.vibrate([30,40,60])},1550)}
+ tick();
+}
+function burst(){
+ for(var i=0;i<28;i++){var e=document.createElement("i"),a=Math.random()*6.283,r=90+Math.random()*170;
+  e.className="em";e.style.setProperty("--x",Math.cos(a)*r+"px");e.style.setProperty("--y",Math.sin(a)*r-40+"px");
+  e.style.animationDelay=Math.random()*.15+"s";document.body.appendChild(e);setTimeout(function(x){x.remove()}.bind(null,e),2000)}
+}
+
+/* countdown */
+var prev=[];
+function tick(){
+ if(!cur)return;
+ var n=Date.now(),d=START-n,cd=$("#cd"),cb=$("#cb"),cl=$("#cl");
+ if(d<=0){
+  cd.hidden=true;cb.hidden=false;
+  if(n<END){cl.textContent="The doors are open";cb.textContent="IT'S HAPPENING. GO."}
+  else{cl.textContent="See you next year";cb.textContent="IT'S A WRAP."}
+  return}
+ cd.hidden=false;cb.hidden=true;cl.textContent="Doors open in";
+ var v=[[Math.floor(d/864e5),"days"],[Math.floor(d%864e5/36e5),"hrs"],[Math.floor(d%36e5/6e4),"min"],[Math.floor(d%6e4/1e3),"sec"]];
+ if(!cd.children.length)cd.innerHTML=v.map(function(){return '<div><b></b><i class="lb" style="font-style:normal"></i></div>'}).join("");
+ v.forEach(function(x,i){var b=cd.children[i].firstChild,s=String(x[0]).padStart(2,"0");
+  if(prev[i]!==s){b.textContent=s;if(!rm&&prev[i]!==undefined){b.classList.remove("t");void b.offsetWidth;b.classList.add("t")}prev[i]=s}
+  cd.children[i].lastChild.textContent=x[1]})
+}
+setInterval(tick,1000);
+
+/* pass interaction: tap = flip, drag = tilt */
+var sc=$("#sc"),tl=$("#tl"),fl=$("#fl"),glows=document.querySelectorAll(".gl"),sx=0,sy=0,moved=false,down=false,flipped=false;
+function aim(cx,cy){
+ var r=sc.getBoundingClientRect(),x=(cx-r.left)/r.width,y=(cy-r.top)/r.height;
+ tl.style.setProperty("--ry",((x-.5)*(flipped?-24:24)).toFixed(1)+"deg");tl.style.setProperty("--rx",((.5-y)*18).toFixed(1)+"deg");
+ glows.forEach(function(g){g.style.setProperty("--gx",x*100+"%");g.style.setProperty("--gy",y*100+"%");g.style.setProperty("--go",1)})}
+function rest(){tl.classList.remove("drag");tl.style.setProperty("--rx","0deg");tl.style.setProperty("--ry","0deg");glows.forEach(function(g){g.style.setProperty("--go",0)})}
+function flip(){flipped=!flipped;fl.classList.toggle("flip",flipped);$("#ht").textContent=flipped?"Tap to flip back":"Tap to flip";sc.setAttribute("aria-label",flipped?"Pass back. Press to flip.":"Your pass. Press to flip.");if(navigator.vibrate)navigator.vibrate(15)}
+sc.addEventListener("pointerdown",function(e){down=true;moved=false;sx=e.clientX;sy=e.clientY;tl.classList.add("drag");aim(e.clientX,e.clientY)});
+sc.addEventListener("pointermove",function(e){if(e.pointerType==="mouse"||down){if(down&&Math.hypot(e.clientX-sx,e.clientY-sy)>7)moved=true;if(!rm)aim(e.clientX,e.clientY)}});
+function up(){if(!down)return;down=false;if(!moved)flip();rest()}
+sc.addEventListener("pointerup",up);sc.addEventListener("pointercancel",function(){down=false;rest()});
+sc.addEventListener("pointerleave",function(e){if(e.pointerType==="mouse")rest()});
+sc.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();flip()}});
+/* gyro tilt where allowed without a prompt (Android) */
+if(!rm&&window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission!=="function"&&matchMedia("(pointer:coarse)").matches)
+ addEventListener("deviceorientation",function(e){if(down||e.gamma==null||!cur)return;
+  var g=Math.max(-18,Math.min(18,e.gamma)),b=Math.max(-14,Math.min(14,(e.beta||0)-45));
+  tl.style.setProperty("--ry",(flipped?-g:g)+"deg");tl.style.setProperty("--rx",(-b)+"deg")});
+
+/* actions */
+$("#ics").onclick=function(){
+ var ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Unrest//HH//EN","BEGIN:VEVENT","UID:hh-2026@unrest","DTSTAMP:20261027T000000Z","DTSTART:20261101T073000Z","DTEND:20261101T163000Z","SUMMARY:Trick or Treat - Halloween House","DESCRIPTION:Unrest presents Trick or Treat. Pass ID "+(cur&&cur.id||""),"END:VEVENT","END:VCALENDAR"].join("\r\n");
+ var a=document.createElement("a");a.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(ics);a.download="halloween-house.ics";document.body.appendChild(a);a.click();a.remove()};
+$("#shr").onclick=function(){
+ var t="Trick or Treat - Halloween House by Unrest. 1 Nov 2026, 1 PM to 10 PM. Get your invite:",u=location.origin+location.pathname.replace(/[^\/]*$/,"")+"index.html";
+ if(navigator.share)navigator.share({title:"Trick or Treat",text:t,url:u}).catch(function(){});
+ else if(navigator.clipboard){navigator.clipboard.writeText(t+" "+u).then(function(){var b=$("#shr");b.textContent="Link copied";setTimeout(function(){b.textContent="Share"},1600)})}};
+
+/* deep link ?p=XXXXXXXXXX or remembered number */
+var q=(new URLSearchParams(location.search).get("p")||"").trim(),saved="";
+try{saved=localStorage.getItem(KEY)||""}catch(e){}
+var pre=clean(q||saved);
+if(/^[6-9]\d{9}$/.test(pre)){$("#ph").value=pre;run(pre,true)}
+})();
+</script>
+</body>
+</html>
