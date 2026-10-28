@@ -129,8 +129,8 @@ a{color:inherit;text-decoration:none}
 .perf::before,.perf::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--night);border:1px solid #3a3a3a}
 .perf::before{left:-25px}.perf::after{right:-25px}
 .tks{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:14px;padding:20px 24px 0}
-.pid{margin-top:2px;font:400 1.7rem/1 Anton,sans-serif;letter-spacing:.06em;color:var(--pump)}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid rgba(255,106,42,.5);border-radius:99px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:var(--pump)}
+.pid{white-space:nowrap;margin-top:2px;font:400 1.7rem/1 Anton,sans-serif;letter-spacing:.06em;color:var(--pump)}
+.chip{white-space:nowrap;display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid rgba(255,106,42,.5);border-radius:99px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.2em;color:var(--pump)}
 .chip i{width:6px;height:6px;border-radius:50%;background:var(--pump);box-shadow:0 0 10px 2px var(--pump);animation:wf 3s infinite}
 @keyframes wf{0%,100%,60%,64%{opacity:.95}62%{opacity:.15}30%{opacity:.7}}
 .tap{position:relative;padding:16px 24px 22px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#5a5a5a}
@@ -159,9 +159,28 @@ a{color:inherit;text-decoration:none}
 .live-msg{font:400 clamp(2.4rem,12vw,3.4rem)/1 Anton,sans-serif;letter-spacing:.03em;color:var(--pump);margin-top:12px}
 .cdw .own{margin-top:26px}
 
+
+.payw{margin-top:22px;display:grid;gap:14px;opacity:0}
+.payw[hidden]{display:none}
+.done.go .payw{animation:fd 1s var(--ease) 3s forwards}
+.pay{padding:22px 20px;border:1px solid var(--char);background:linear-gradient(165deg,#141415,#0d0d0e);display:grid;gap:14px}
+.pay[hidden]{display:none}
+.pay:not([hidden]){animation:vin .6s var(--ease) both}
+.pay .qr{width:min(70%,230px);margin:0 auto}
+.upi{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px dashed #3a3a3a}
+.upi b{font-weight:600;letter-spacing:.04em;overflow-wrap:anywhere}
+.upi .btn{width:auto;height:40px;padding:0 18px;margin-left:auto;font-size:.75rem}
+.note{font-size:.85rem;color:var(--ash)}
+.note.c{text-align:center}
+.uf{display:grid;gap:10px}
+.uf input{width:100%;padding:12px 0;border:0;border-bottom:1px solid var(--char);background:transparent;color:var(--ivory);font:500 1rem Inter,sans-serif;outline:none;border-radius:0}
+.uf input:focus{border-color:var(--pump)}
+.lockb{width:54px;height:54px;margin:18px auto 4px;color:var(--pump)}
+.chip.due,.chip.verifying{border-color:rgba(244,240,232,.35);color:var(--ivory)}
+.chip.due i,.chip.verifying i{background:var(--ivory);box-shadow:0 0 10px 2px rgba(244,240,232,.6)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
-  .ring circle,.ring path{stroke-dashoffset:0}.cf span{transform:none}.who,.hint,.cdw{opacity:1}.stage{opacity:1;transform:none}.nm .ch{opacity:1;transform:none;filter:none}
+  .ring circle,.ring path{stroke-dashoffset:0}.cf span{transform:none}.who,.hint,.cdw,.payw{opacity:1}.stage{opacity:1;transform:none}.nm .ch{opacity:1;transform:none;filter:none}
 }
 </style>
 </head>
@@ -196,11 +215,12 @@ a{color:inherit;text-decoration:none}
   <section class="view done" id="done" hidden>
     <div class="seal">
       <svg class="ring" viewBox="0 0 88 88" aria-hidden="true"><circle class="pulse" cx="44" cy="44" r="40"/><circle cx="44" cy="44" r="40" pathLength="1"/><path d="M27 45l12 12 22-26" pathLength="1"/></svg>
-      <h1 class="cf" id="cf" aria-label="Confirmed"></h1>
+      <h1 class="cf" id="cf" ></h1>
       <p class="who" id="who"></p>
     </div>
     <div class="stage" id="stage"><div class="float"><div class="card" id="card" role="button" tabindex="0" aria-pressed="false" aria-label="Your pass. Press to flip it over."></div></div></div>
     <p class="hint">Drag to tilt. Tap to flip.</p>
+    <div class="payw" id="payw" hidden></div>
     <div class="cdw" id="cdw">
       <span class="lb" id="cdl">Doors open in</span>
       <div class="cd" id="cd"></div>
@@ -219,6 +239,7 @@ var rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ===== CONFIG ===== */
 var LOOKUP="https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"; /* same web app as the invite page. Empty = demo numbers */
+var PRICE="Rs 999",AMOUNT=999,UPI={id:"9650692251@pthdfc",name:"Unrest"}; /* same as the invite page */
 var MAIN="https://halloween.unrestdu.in"; /* main site: apply + pay */
 var START=new Date("2026-11-01T13:00:00+05:30").getTime(); /* Sunday 1 Nov 2026, 1:00 PM IST */
 var END=new Date("2026-11-01T22:00:00+05:30").getTime();   /* 10:00 PM */
@@ -248,9 +269,7 @@ function msg(h,t,btns){
 var phone="";
 function route(d,p){
   var s=d&&d.status;
-  if(s==="approved"&&d.pay==="paid"){store(p);confirmed(d,p);return}
-  if(s==="approved"&&d.pay==="verifying"){store(p);msg('PAYMENT <span>RECEIVED.</span>',"We are matching your payment. This page turns into your pass the moment it is confirmed.",'<button class="btn" type="button" data-act="again"><span>Check again</span></button><button class="btn g" type="button" data-act="other"><span>Use a different number</span></button>');return}
-  if(s==="approved"){store(p);msg('NEARLY <span>THERE.</span>',"Your invite is approved. Pay on the invite page to confirm your pass.",'<a class="btn" href="'+MAIN+'"><span>Go to payment →</span></a><button class="btn g" type="button" data-act="other"><span>Use a different number</span></button>');return}
+  if(s==="approved"){store(p);confirmed(d,p);return}
   store("");
   if(s==="pending"){msg('STILL <span>UNDER REVIEW.</span>',"We have your request and the team is still reviewing it. Check back soon with the same number.",'<button class="btn" type="button" data-act="other"><span>Try again</span></button>');return}
   if(s==="declined"){msg('NOT THIS <span>TIME.</span>',"We could not approve this request. Reach out to the Unrest team if you think this is a mistake.",'<button class="btn g" type="button" data-act="other"><span>Use a different number</span></button>');return}
@@ -258,7 +277,7 @@ function route(d,p){
 }
 function check(p,auto){
   phone=p;show("load");
-  look(p).then(function(d){route(d,p)}).catch(function(){
+  look(p).then(function(d){route(d,p)}).catch(function(x){window.__e=x;if(window.console)console.error(x);
     if(auto){show("gate");$("#lp").value=p;return}
     msg('SOMETHING <span>BROKE.</span>',"Could not check right now. Check your connection and try again.",'<button class="btn" type="button" data-act="retry"><span>Try again</span></button>');
   });
@@ -278,13 +297,13 @@ function other(){store("");phone="";$("#lp").value="";err("");show("gate");$("#l
 $("#other").onclick=other;
 
 /* ===== confirmed view ===== */
-function qrSvg(t){var q=qrcode(0,"M");q.addData(t);q.make();var n=q.getModuleCount(),m=2,d="",r,c;for(r=0;r<n;r++)for(c=0;c<n;c++)if(q.isDark(r,c))d+="M"+(c+m)+" "+(r+m)+"h1v1h-1z";var z=n+2*m;return '<svg viewBox="0 0 '+z+' '+z+'" shape-rendering="crispEdges" role="img" aria-label="Entry QR code for pass '+esc(t)+'"><rect width="'+z+'" height="'+z+'" fill="#F4F0E8"/><path d="'+d+'" fill="#0B0B0C"/></svg>'}
+function qrSvg(t,lab){var q=qrcode(0,"M");q.addData(t);q.make();var n=q.getModuleCount(),m=2,d="",r,c;for(r=0;r<n;r++)for(c=0;c<n;c++)if(q.isDark(r,c))d+="M"+(c+m)+" "+(r+m)+"h1v1h-1z";var z=n+2*m;return '<svg viewBox="0 0 '+z+' '+z+'" shape-rendering="crispEdges" role="img" aria-label="'+esc(lab||"QR code")+'"><rect width="'+z+'" height="'+z+'" fill="#F4F0E8"/><path d="'+d+'" fill="#0B0B0C"/></svg>'}
 function letters(txt,cls){var i=0;return txt.split("").map(function(ch){return ch===" "?'<span class="sp"></span>':'<span class="ch" style="--i:'+(i++)+'" aria-hidden="true">'+esc(ch)+'</span>'}).join("")}
 var card=$("#card"),flipped=false;
 function confirmed(d,p){
-  var name=(d.name||"Guest").trim(),id=d.id||"UH-"+p.slice(-4),first=name.split(" ")[0];
-  $("#cf").innerHTML="CONFIRMED".split("").map(function(c,i){return '<span style="--i:'+i+'" aria-hidden="true">'+c+'</span>'}).join("");
-  $("#who").innerHTML="You're in, <b>"+esc(first)+"</b>.";
+  var ps=d.pay==="paid"?"paid":d.pay==="verifying"?"verifying":"due",name=(d.name||"Guest").trim(),id=d.id||"UH-"+p.slice(-4),first=name.split(" ")[0];
+  var word={paid:"CONFIRMED",verifying:"VERIFYING",due:"APPROVED"}[ps];$("#cf").setAttribute("aria-label",word.charAt(0)+word.slice(1).toLowerCase());$("#cf").innerHTML=word.split("").map(function(c,i){return '<span style="--i:'+i+'" aria-hidden="true">'+c+'</span>'}).join("");
+  $("#who").innerHTML=ps==="paid"?"You're in, <b>"+esc(first)+"</b>.":ps==="verifying"?"Thanks, <b>"+esc(first)+"</b>. We're matching your payment.":"Congrats, <b>"+esc(first)+"</b>. Pay to lock your spot.";
   card.innerHTML=
    '<div class="face front"><div class="sheen" id="sheen"></div>'
   +'<div class="tkh"><svg class="mn" viewBox="0 0 120 120" aria-hidden="true"><path d="M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z" fill="#FF6A2A" opacity=".92"/></svg><p class="lb">Unrest presents</p><p class="tkt">TRICK OR <span>TREAT</span></p><p class="tkv">HALLOWEEN HOUSE</p></div>'
@@ -292,14 +311,54 @@ function confirmed(d,p){
   +'<div><dt class="lb">College</dt><dd>'+esc(d.college||"-")+'</dd></div><div><dt class="lb">Year</dt><dd>'+esc(d.year||"-")+'</dd></div>'
   +'<div><dt class="lb">Date</dt><dd>Sun, 1 Nov 2026</dd></div><div><dt class="lb">Time</dt><dd>1:00 PM – 10:00 PM</dd></div></dl>'
   +'<div class="perf" aria-hidden="true"></div>'
-  +'<div class="tks"><div><p class="lb">Pass ID</p><p class="pid">'+esc(id)+'</p></div><span class="chip"><i></i>Confirmed</span></div>'
+  +'<div class="tks"><div><p class="lb">Pass ID</p><p class="pid">'+esc(id)+'</p></div><span class="chip '+ps+'"><i></i>'+{paid:"Confirmed",verifying:"Verifying",due:"Approved"}[ps]+'</span></div>'
   +'<p class="tap" aria-hidden="true">Tap to flip</p></div>'
-  +'<div class="face rear"><div class="sheen" id="sheen2"></div><div class="bk"><p class="lb">Show this at the door</p><div class="qr">'+qrSvg(id)+'</div><p class="pid">'+esc(id)+'</p><p class="s">One entry per pass. Keep this page handy, and have a photo ID ready.</p><p class="tap" style="padding:14px 0 0">Tap to flip back</p></div></div>';
+  +'<div class="face rear"><div class="sheen" id="sheen2"></div><div class="bk">'+back(ps,id)+'<p class="tap" style="padding:14px 0 0">Tap to flip back</p></div></div>';
   flipped=false;st.ta=0;st.fa=0;st.rx=st.ry=st.trx=st.try=0;card.style.transform="";card.setAttribute("aria-pressed","false");
   var dn=$("#done");dn.classList.remove("go");show("done");void dn.offsetWidth;
   if(!rm){setTimeout(function(){dn.classList.add("go")},60);setTimeout(burst,2300)}else dn.classList.add("go");
   window.scrollTo(0,0);
-  startCd();
+  startCd();payUI(d,p,ps,id);
+}
+function back(ps,id){
+  if(ps==="paid")return '<p class="lb">Show this at the door</p><div class="qr">'+qrSvg(id,"Entry QR code for pass "+id)+'</div><p class="pid">'+esc(id)+'</p><p class="s">One entry per pass. Keep this page handy, and have a photo ID ready.</p>';
+  return '<p class="lb">Entry code</p><svg class="lockb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><p class="pid">'+esc(id)+'</p><p class="s">'+(ps==="due"?"Your door QR unlocks once your payment is confirmed.":"Your door QR unlocks as soon as we match your payment.")+'</p>';
+}
+function upiLink(id){return "upi://pay?pa="+encodeURIComponent(UPI.id)+"&pn="+encodeURIComponent(UPI.name)+"&am="+AMOUNT+"&cu=INR&tn="+encodeURIComponent(id+" Halloween House")}
+function payHtml(id,link,touch){
+  return '<p class="lb">Pay '+PRICE+' by UPI</p>'
+  +(touch?'<a class="btn" href="'+esc(link)+'"><span>Open UPI app →</span></a><p class="note">Opens GPay, PhonePe, Paytm or any UPI app. If your app refuses, copy the UPI ID below and pay manually.</p>':'<div class="qr">'+qrSvg(link,"UPI QR code for "+PRICE)+'</div><p class="note c">Scan with any UPI app on your phone.</p>')
+  +'<div class="upi"><span class="lb">UPI ID</span><b>'+esc(UPI.id)+'</b><button class="btn g" type="button" id="cp"><span>Copy</span></button></div>'
+  +'<p class="note">Amount '+PRICE+'. Put <b>'+esc(id)+'</b> in the remark.</p>'
+  +'<form id="uf" class="uf" novalidate><label class="lb" for="ut">After paying: name on the account you paid from</label><input type="text" id="ut" placeholder="As shown in your UPI app" autocomplete="name"><p class="er" id="eut" role="alert" hidden></p><p class="note">We match this name to the payment to confirm your pass.</p><button class="btn" type="submit" id="ub"><span>I have paid →</span></button></form>';
+}
+function sendPayer(p,n){return fetch(LOOKUP,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify({phone:p,payer:n})})}
+function payUI(d,p,ps,id){
+  var w=$("#payw"),h="";
+  if(ps==="due")h+='<button class="btn" type="button" id="payb" aria-expanded="false" aria-controls="pay"><span>Pay '+PRICE+' to confirm</span></button><div id="pay" class="pay" hidden></div>';
+  if(ps==="verifying")h+='<p class="note c">We have your payment details. The team will match the name to the payment and this pass turns Confirmed. <button class="lk" id="rf" type="button">Check status</button></p>';
+  if(/^https:\/\/chat\.whatsapp\.com\//.test(d.group||""))h+='<a class="btn g" href="'+esc(d.group)+'" target="_blank" rel="noopener noreferrer"><span>Join WhatsApp group</span></a>';
+  w.innerHTML=h;w.hidden=!h;
+  var b=$("#payb"),box=$("#pay"),rf=$("#rf");
+  if(rf)rf.onclick=function(){rf.textContent="Checking…";look(p).then(function(d2){if(d2&&d2.status==="approved"&&d2.pay==="paid")confirmed(d2,p);else rf.textContent="Still verifying"}).catch(function(){rf.textContent="Try again"})};
+  if(!b)return;
+  var link=upiLink(id),touch=matchMedia("(pointer:coarse)").matches,busy2=false;
+  b.onclick=function(){
+    if(!box.hidden){box.hidden=true;b.setAttribute("aria-expanded","false");return}
+    box.innerHTML=payHtml(id,link,touch);box.hidden=false;b.setAttribute("aria-expanded","true");
+    box.scrollIntoView({behavior:rm?"auto":"smooth",block:"nearest"});
+    $("#cp").onclick=function(){var l=$("#cp").firstChild;function ok(){l.textContent="Copied";setTimeout(function(){l.textContent="Copy"},1600)}
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(UPI.id).then(ok,function(){});else{var t=document.createElement("textarea");t.value=UPI.id;document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(e){}t.remove()}};
+    $("#uf").onsubmit=function(ev){
+      ev.preventDefault();if(busy2)return;
+      var u=$("#ut").value.replace(/\s+/g," ").trim(),e=$("#eut");
+      if(!/^[\p{L} .'-]{2,60}$/u.test(u)){e.hidden=false;e.textContent="Enter the name on the account you paid from.";return}
+      e.hidden=true;busy2=true;var l=$("#ub").firstChild;l.textContent="Sending…";
+      sendPayer(p,u).then(function(){return look(p)}).then(function(d2){
+        if(d2&&d2.status==="approved"&&(d2.pay==="verifying"||d2.pay==="paid"))confirmed(d2,p);else throw 0;
+      }).catch(function(){busy2=false;l.textContent="I have paid →";e.hidden=false;e.textContent="Could not record that. Check your connection and try again."});
+    };
+  };
 }
 function burst(){
   var s=$("#stage"),h="";
