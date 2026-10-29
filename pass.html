@@ -10,7 +10,7 @@
 <style>
 :root{--night:#0B0B0C;--ivory:#F4F0E8;--pump:#FF6A2A;--ash:#929292;--char:#292929;--ease:cubic-bezier(.22,1,.36,1);--spring:cubic-bezier(.34,1.35,.64,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0}
-html{background:var(--night)}
+html{background:var(--night);scroll-behavior:smooth}
 body{min-height:100svh;background:var(--night);color:var(--ivory);font:400 1rem/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
 body::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.08;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 ::selection{background:var(--pump);color:var(--night)}
@@ -178,6 +178,38 @@ a{color:inherit;text-decoration:none}
 .lockb{width:54px;height:54px;margin:18px auto 4px;color:var(--pump)}
 .chip.due,.chip.verifying{border-color:rgba(244,240,232,.35);color:var(--ivory)}
 .chip.due i,.chip.verifying i{background:var(--ivory);box-shadow:0 0 10px 2px rgba(244,240,232,.6)}
+
+/* lore */
+.lore{margin-top:30px;padding-top:30px;border-top:1px solid var(--char)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.lore h2{margin-top:14px;font:400 clamp(2.3rem,11.5vw,3.4rem)/1 Anton,sans-serif;letter-spacing:.015em}
+.lore h2 em{font-style:normal;color:var(--pump)}
+.lore .tx{margin-top:20px;display:grid;gap:14px;color:rgba(244,240,232,.8);font-size:1rem}
+.lore .tx b{color:var(--ivory);font-weight:600}
+.lore .tx .fk{color:var(--pump);animation:wf 4s infinite}
+.lore .rule{margin-top:22px;padding:16px 18px;border-left:2px solid var(--pump);background:linear-gradient(90deg,rgba(255,106,42,.1),transparent);font:400 1.25rem/1.25 Anton,sans-serif;letter-spacing:.03em}
+.cs{margin-top:44px}
+.cs h3{margin-top:10px;font:400 1.9rem/1 Anton,sans-serif;letter-spacing:.02em}
+.cs .sub{margin-top:8px;font-size:.9rem;color:var(--ash)}
+.rail{display:flex;gap:14px;margin:20px -20px 0;padding:6px 20px 18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{display:none}
+.cc{position:relative;flex:0 0 74%;scroll-snap-align:center;display:flex;flex-direction:column;min-height:210px;padding:20px 20px 18px;border:1px solid #333;border-radius:8px;background:linear-gradient(165deg,#181819,#0d0d0e 70%);overflow:hidden;transition:border-color .4s,transform .5s var(--ease),box-shadow .5s}
+.cc::before{content:"";position:absolute;right:-60px;top:-60px;width:170px;height:170px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,106,42,.2),transparent);transition:transform .8s var(--ease)}
+.cc:hover{border-color:rgba(255,106,42,.6);transform:translateY(-4px);box-shadow:0 26px 60px -34px rgba(255,106,42,.55)}
+.cc:hover::before{transform:scale(1.4)}
+.cc .no{position:relative;font:400 .85rem/1 Anton,sans-serif;letter-spacing:.28em;color:var(--pump)}
+.cc .nm2{position:relative;margin-top:14px;font:400 1.7rem/1.02 Anton,sans-serif;letter-spacing:.02em}
+.cc .ds{position:relative;margin-top:10px;font-size:.92rem;color:rgba(244,240,232,.75)}
+.cc .gr{position:relative;margin-top:auto;padding-top:16px}
+.cc .gr .lb{display:block;margin-bottom:4px}
+.cc .gr p{font-size:.88rem;color:var(--ivory)}
+.swp{display:flex;justify-content:center;gap:6px;margin-top:2px}
+.swp i{width:6px;height:6px;border-radius:50%;background:#3a3a3a;transition:background .3s,transform .3s}
+.swp i.on{background:var(--pump);transform:scale(1.35)}
+.lore .end{margin-top:34px;text-align:center}
+@media (min-width:480px){.cc{flex-basis:300px}}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
   .ring circle,.ring path{stroke-dashoffset:0}.cf span{transform:none}.who,.hint,.cdw,.payw{opacity:1}.stage{opacity:1;transform:none}.nm .ch{opacity:1;transform:none;filter:none}
@@ -203,6 +235,7 @@ a{color:inherit;text-decoration:none}
       <div><label class="lb" for="lp">Contact number</label><div class="pf" id="pf"><b>+91</b><input type="text" id="lp" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number"></div><p class="er" id="elp" role="alert" hidden></p></div>
       <button class="btn" type="submit" id="lbtn"><span>View my pass →</span></button>
     </form>
+    <a class="lk" href="#lore" style="margin-top:30px;justify-self:start;align-self:flex-start">Read the brief ↓</a>
   </section>
 
   <!-- 2. checking -->
@@ -227,6 +260,25 @@ a{color:inherit;text-decoration:none}
       <p class="lb" style="margin-top:14px">Sunday, 1 November · 1:00 PM</p>
       <div class="own"><button class="lk" type="button" id="other">Use a different number</button></div>
     </div>
+  </section>
+    <section class="lore" id="lore" aria-labelledby="lh">
+    <p class="lb rv">The Brief · Halloween House</p>
+    <h2 class="rv" id="lh" style="--d:.08s">THE BIGGEST COLLEGE <em>HALLOWEEN PARTY.</em></h2>
+    <div class="tx">
+      <p class="rv" style="--d:.1s">Every year, on this one night, the line between the dead and the living goes thin. The dead come looking for a body to borrow. The living, who have been dodging things since their first attendance sheet, found the oldest trick there is: <b>put on a costume</b> and nothing will possess you.</p>
+      <p class="rv" style="--d:.1s">This year the dead have gone to college. They are in the back row, the library stacks, the canteen queue and the group chat that nobody replies to. Some never graduated. Some never <span class="fk">left.</span></p>
+      <p class="rv" style="--d:.1s">The one safe place on campus tonight is the <b>Halloween House</b>. Walk in, walk through the rooms, and take whatever you came for. Just be someone else when you do.</p>
+    </div>
+    <p class="rule rv">COME DRESSED. STAY DISGUISED. DON'T GET POSSESSED.</p>
+
+    <div class="cs">
+      <p class="lb rv">Costume inspiration</p>
+      <h3 class="rv" style="--d:.06s">WHO ARE YOU <span style="color:var(--pump)">HIDING AS?</span></h3>
+      <p class="sub rv" style="--d:.1s">Eight spirits that haunt every college. Pick one, or invent your own. Cheap, quick and DIY counts.</p>
+      <div class="rail rv" id="rail" style="--d:.14s" tabindex="0" aria-label="Costume ideas, swipe sideways"></div>
+      <div class="swp" id="swp" aria-hidden="true"></div>
+    </div>
+    <p class="lb end rv">See you at the house</p>
   </section>
 </main>
 
@@ -430,6 +482,33 @@ function tick(){
   units.forEach(function(n,i){roll(n,String(v[i]).padStart(2,"0"))});
 }
 function startCd(){clearInterval(tm);units=null;$("#cdl").textContent="Doors open in";tick();tm=setInterval(tick,1000)}
+
+/* ===== lore: costume rail + scroll reveal ===== */
+var COS=[
+ ["The Last-Bench Ghost","Attendance: 0%. Presence: eerie. Has haunted the same seat since first year.","A white bedsheet, a pair of sunglasses and an attendance slip pinned on: 'Needs 75%'"],
+ ["The Proxy Poltergeist","Answers 'present, sir' for people who are not even in the building.","A hoodie, a clipboard of other people's names, and a voice recorder saying 'yes sir'"],
+ ["The Overdue Book","Issued in 1987. Still unreturned. The fine has become a curse.","Dust-grey clothes, a library card on a string, a spine drawn on your back"],
+ ["The Backlog Banshee","Wails at 3 AM, carrying seven papers and zero peace.","All black, wild hair, a pile of notes and a placard reading 'Re-exam'"],
+ ["The Placement Zombie","Risen from the rejection pile. Still says 'open to work'.","A crumpled blazer, a lanyard, a CV in hand and a bit of face paint"],
+ ["The Recruitment Vampire","Smiles, hands you a flyer, and then your whole semester is gone.","A cape, fangs, a society tee and a stack of flyers saying 'Join us'"],
+ ["The Assignment Reaper","Hooded, silent. Arrives the night before the deadline, as always.","A black hood, a highlighter 'scythe', a tag reading 'Due: yesterday'"],
+ ["The Group Project Ghost","Seen at 3 AM. Never replies. Takes credit in the end.","A sheet with a phone-shaped hole, blue ticks drawn on, and 'Seen' written across"]
+];
+(function(){
+  var r=$("#rail"),d=$("#swp");
+  r.innerHTML=COS.map(function(c,i){return '<article class="cc"><span class="no">'+String(i+1).padStart(2,"0")+' / 08</span><h4 class="nm2">'+esc(c[0]).toUpperCase()+'</h4><div class="gr"><span class="lb">The look</span><p>'+esc(c[2])+'</p></div></article>'}).join("");
+  d.innerHTML=COS.map(function(_,i){return '<i'+(i?'':' class="on"')+'></i>'}).join("");
+  var cards=[].slice.call(r.children),dots=[].slice.call(d.children),tk=0;
+  r.addEventListener("scroll",function(){
+    if(tk)return;tk=requestAnimationFrame(function(){tk=0;var c=r.scrollLeft+r.clientWidth/2,b=0,bd=1e9;
+      cards.forEach(function(e,i){var m=Math.abs(e.offsetLeft+e.offsetWidth/2-c);if(m<bd){bd=m;b=i}});
+      dots.forEach(function(e,i){e.classList.toggle("on",i===b)})});
+  },{passive:true});
+  var els=[].slice.call(document.querySelectorAll(".rv"));
+  if(!("IntersectionObserver" in window)||rm){els.forEach(function(e){e.classList.add("in")});return}
+  var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}})},{threshold:.15,rootMargin:"0px 0px -6% 0px"});
+  els.forEach(function(e){io.observe(e)});
+})();
 
 /* ===== start: a returning phone opens straight to the pass ===== */
 var saved=stored();
