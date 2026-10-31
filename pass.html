@@ -257,7 +257,7 @@ a{color:inherit;text-decoration:none}
     <div class="cdw" id="cdw">
       <span class="lb" id="cdl">Doors open in</span>
       <div class="cd" id="cd"></div>
-      <p class="lb" style="margin-top:14px">Sunday, 1 November · 1:00 PM</p>
+      <p class="lb" style="margin-top:14px">Sunday, 1 November · 4:00 PM</p>
       <div class="own"><button class="lk" type="button" id="other">Use a different number</button></div>
     </div>
   </section>
@@ -293,7 +293,7 @@ var rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
 var LOOKUP="https://script.google.com/macros/s/AKfycbyNSM9ZBVBqeLwQQn52q6OIQvw_AKt3bD--naBl7nL7lcHeuLxQTvRaU3iEN-esaMkLIg/exec"; /* same web app as the invite page. Empty = demo numbers */
 var PRICE="Rs 799",AMOUNT=799,UPI={id:"9650692251@pthdfc",name:"Unrest"}; /* same as the invite page */
 var MAIN="https://halloween.unrestdu.in"; /* main site: apply + pay */
-var START=new Date("2026-11-01T13:00:00+05:30").getTime(); /* Sunday 1 Nov 2026, 1:00 PM IST */
+var START=new Date("2026-11-01T13:00:00+05:30").getTime(); /* Sunday 1 Nov 2026, 4:00 PM IST */
 var END=new Date("2026-11-01T22:00:00+05:30").getTime();   /* 10:00 PM */
 $("#back").href=MAIN;
 
@@ -361,7 +361,7 @@ function confirmed(d,p){
   +'<div class="tkh"><svg class="mn" viewBox="0 0 120 120" aria-hidden="true"><path d="M78 12a50 50 0 1 0 30 76A42 42 0 0 1 78 12z" fill="#FF6A2A" opacity=".92"/></svg><p class="lb">Unrest presents</p><p class="tkt">TRICK OR <span>TREAT</span></p><p class="tkv">HALLOWEEN HOUSE</p></div>'
   +'<dl class="tkb"><div class="w2"><dt class="lb">Guest</dt><dd class="nm"><span class="sr">'+esc(name)+'</span>'+letters(name)+'</dd></div>'
   +'<div><dt class="lb">College</dt><dd>'+esc(d.college||"-")+'</dd></div><div><dt class="lb">Year</dt><dd>'+esc(d.year||"-")+'</dd></div>'
-  +'<div><dt class="lb">Date</dt><dd>Sun, 1 Nov 2026</dd></div><div><dt class="lb">Time</dt><dd>1:00 PM – 10:00 PM</dd></div></dl>'
+  +'<div><dt class="lb">Date</dt><dd>Sun, 1 Nov 2026</dd></div><div><dt class="lb">Time</dt><dd>4:00 PM – 10:00 PM</dd></div></dl>'
   +'<div class="perf" aria-hidden="true"></div>'
   +'<div class="tks"><div><p class="lb">Pass ID</p><p class="pid">'+esc(id)+'</p></div><span class="chip '+ps+'"><i></i>'+{paid:"Confirmed",verifying:"Verifying",due:"Approved"}[ps]+'</span></div>'
   +'<p class="tap" aria-hidden="true">Tap to flip</p></div>'
